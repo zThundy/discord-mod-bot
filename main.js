@@ -1,7 +1,7 @@
 const cLoader = require("./classes/configLoader.js");
 const config = new cLoader().getConfig();
-const Listener = require("./classes/listeners.js");
-const listeners = new Listener();
+const db = require("./classes/database.js");
+const sql = new db(config);
 
 const discord = require("discord.js");
 
@@ -29,9 +29,22 @@ const client = new discord.Client({
 // autenticate the discord client
 client.login(config.token);
 client.config = config;
+client.db = sql;
+
+// map with all modules
+client.modules = new Map();
+const Reactions = require("./classes/userReactions.js")
+client.modules.set("userReactions", new Reactions(config, client));
+const ChannelCounter = require("./classes/usersCount.js");
+client.modules.set("usersCount", new ChannelCounter(config, client));
+
+const Listener = require("./classes/listeners.js");
+const listeners = new Listener(client);
 
 client.on("ready", () => listeners.call("ready", client));
 client.on("messageCreate", (message) => listeners.call("messageCreate", client, message));
 client.on("guildMemberAdd", (user) => listeners.call("guildMemberAdd", client, user));
 client.on("interactionCreate", (interaction) => listeners.call("interactionCreate", client, interaction));
 client.on("guildCreate", (guild) => listeners.call("guildCreate", client, guild));
+client.on("messageReactionAdd", (reaction, user) => listeners.call("messageReactionAdd", client, true, reaction, user));
+client.on("messageReactionRemove", (reaction, user) => listeners.call("messageReactionAdd", client, false, reaction, user));

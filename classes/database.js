@@ -1,0 +1,39 @@
+const sqlite = require('sqlite3');
+
+class SQL {
+    constructor(config) {
+        this.config = config;
+        this.db = null;
+        this._init();
+        console.log("Database loaded");
+    }
+
+    _init() {
+        this.db = new sqlite.Database(`./data/${this.config.database.filename}.db`);
+        this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT)");
+    }
+
+    addReaction(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {STRING} data.channelId
+         * @param {STRING} data.messageId
+         */
+        this.db.run(`INSERT INTO reactions (guildId, channelId, messageId) VALUES (?, ?, ?)`, [data.guildId, data.channelId, data.messageId]);
+    }
+
+    getReactions() {
+        return new Promise((resolve, reject) => {
+            this.db.all("SELECT * FROM reactions", (err, rows) => {
+                if (err) resolve([]);
+                resolve(rows);
+            });
+        });
+    }
+
+    removeReaction(id) {
+        this.db.run(`DELETE FROM reactions WHERE id = ?`, [id]);
+    }
+}
+
+module.exports = SQL;
