@@ -1,5 +1,8 @@
 const cLoader = require("./classes/configLoader.js");
 const config = new cLoader().getConfig();
+const Listener = require("./classes/listeners.js");
+const listeners = new Listener();
+
 const discord = require("discord.js");
 
 // create a new Discord client
@@ -25,17 +28,9 @@ const client = new discord.Client({
 })
 // autenticate the discord client
 client.login(config.token);
+client.config = config;
 
-client.on("ready", () => {
-    console.log("I am ready!");
-});
-
-client.on("message", (message) => {
-    if (message.content === "ping") {
-        message.reply("pong");
-    }
-});
-
-client.on("interaction", (interaction) => {
-
-});
+client.on("ready", () => listeners.call("ready", client));
+client.on("messageCreate", (message) => listeners.call("messageCreate", client, message));
+client.on("guildMemberAdd", (user) => listeners.call("guildMemberAdd", client, user));
+client.on("interactionCreate", (interaction) => listeners.call("interactionCreate", client, interaction));

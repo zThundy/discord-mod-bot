@@ -1,3 +1,9 @@
 {
-    "token": "YOUR_TOKEN_HERE"
+    "token": "YOUR_TOKEN_HERE",
+    "userRole": "DEFAULT_ROLE_ID_HERE",
+    "usersCount": {
+        "enabled": true,
+        "channelId": "CHANNEL_ID_HERE",
+        "channelName": "💚 Users count: {0}"
+    }
 }
