@@ -34,3 +34,4 @@ client.on("ready", () => listeners.call("ready", client));
 client.on("messageCreate", (message) => listeners.call("messageCreate", client, message));
 client.on("guildMemberAdd", (user) => listeners.call("guildMemberAdd", client, user));
 client.on("interactionCreate", (interaction) => listeners.call("interactionCreate", client, interaction));
+client.on("guildCreate", (guild) => listeners.call("guildCreate", client, guild));

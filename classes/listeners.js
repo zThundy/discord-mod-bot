@@ -2,6 +2,7 @@ const MessageListener = require('../listeners/MessageListener.js');
 const ReadyListener = require('../listeners/ReadyListener.js');
 const NewUserListener = require('../listeners/NewUserListener.js');
 const InteractionListener = require('../listeners/InteractionListener.js');
+const GuildCreateListener = require('../listeners/GuildCreateListener.js');
 
 const cLoader = require("../classes/configLoader.js");
 const config = new cLoader().getConfig();
@@ -13,6 +14,7 @@ class Listeners {
         this.register("ready", new ReadyListener(config));
         this.register("guildMemberAdd", new NewUserListener(config));
         this.register("interactionCreate", new InteractionListener(config));
+        this.register("guildCreate", new GuildCreateListener(config));
     }
 
     register(event, listener) {

@@ -7,6 +7,7 @@ class Listener {
     }
 
     run(client, message) {
+        if (message.guild.id !== this.config.guildId) return;
         this.counter.update(message.guild)
         console.log("New message: " + message.content);
         
