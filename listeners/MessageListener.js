@@ -32,10 +32,10 @@ class Listener {
                             break;
 
                         case "remove":
-                            this.reactions.remove({
+                            this.reactions.remove(message, {
                                 guildId: message.guild.id,
                                 channelId: message.channel.id,
-                                messageId: message.id
+                                messageId: message.reference.messageId
                             })
                             break;
                     }

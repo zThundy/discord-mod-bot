@@ -13,15 +13,6 @@ class SQL {
         this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT)");
     }
 
-    addReaction(data) {
-        /**
-         * @param {STRING} data.guildId
-         * @param {STRING} data.channelId
-         * @param {STRING} data.messageId
-         */
-        this.db.run(`INSERT INTO reactions (guildId, channelId, messageId) VALUES (?, ?, ?)`, [data.guildId, data.channelId, data.messageId]);
-    }
-
     getReactions() {
         return new Promise((resolve, reject) => {
             this.db.all("SELECT * FROM reactions", (err, rows) => {
@@ -31,8 +22,22 @@ class SQL {
         });
     }
 
-    removeReaction(id) {
-        this.db.run(`DELETE FROM reactions WHERE id = ?`, [id]);
+    addReaction(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {STRING} data.channelId
+         * @param {STRING} data.messageId
+         */
+        this.db.run(`INSERT INTO reactions (guildId, channelId, messageId) VALUES (?, ?, ?)`, [data.guildId, data.channelId, data.messageId]);
+    }
+
+    removeReaction(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {STRING} data.channelId
+         * @param {STRING} data.messageId
+         */
+        this.db.run(`DELETE FROM reactions WHERE guildId = ? AND channelId = ? AND messageId = ?`, [data.guildId, data.channelId, data.messageId]);
     }
 }
 
