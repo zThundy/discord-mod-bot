@@ -1,4 +1,5 @@
-const config = require("./config.json");
+const cLoader = require("./classes/configLoader.js");
+const config = new cLoader().getConfig();
 const discord = require("discord.js");
 
 // create a new Discord client
@@ -36,5 +37,5 @@ client.on("message", (message) => {
 });
 
 client.on("interaction", (interaction) => {
-    
+
 });
