@@ -17,6 +17,7 @@ class Counter {
     }
 
     update(guild) {
+        console.log(">> Calling update in Counter");
         this.guild = guild;
         this.cachedUsersCount = guild.members.cache.size;
     }
