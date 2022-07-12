@@ -24,19 +24,21 @@ class Listener {
                     message.content = message.content.trim();
                     switch(message.content) {
                         case "add":
+                            message.content = message.content.split("add")[1];
                             this.reactions.add(message, {
                                 guildId: message.guild.id,
                                 channelId: message.channel.id,
                                 messageId: message.reference.messageId
-                            })
+                            });
                             break;
 
                         case "remove":
+                            message.content = message.content.split("remove")[1];
                             this.reactions.remove(message, {
                                 guildId: message.guild.id,
                                 channelId: message.channel.id,
                                 messageId: message.reference.messageId
-                            })
+                            });
                             break;
                     }
                 } else {

@@ -53,6 +53,31 @@ class Reactions {
                 setTimeout(() => msg.delete(), 5000);
             });
     }
+
+    // create a function that returns an array of strings from a message
+    createArray(message) {
+        var array = [];
+        var index = 0;
+        while (index < message.length) {
+            var char = message.charAt(index);
+            if (char === " ") {
+                array.push(message.substring(0, index));
+                message = message.substring(index + 1);
+                index = 0;
+            } else {
+                index++;
+            }
+        }
+        array.push(message);
+
+        var newArray = [];
+        for (var i = 0; i < array.length; i + 2) {
+            if (array[i] && array[i + 1]) {
+                newArray.push([array[i], array[i + 1]]);
+            }
+        }
+        return newArray;
+    }
 }
 
 module.exports = Reactions;
