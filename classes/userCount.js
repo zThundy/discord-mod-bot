@@ -10,22 +10,22 @@ if (!String.prototype.format) {
 class Counter {
     constructor(config) {
         this.config = config;
-        if (this.config.usersCount.enabled) this._clock();
+        if (this.config.userCount.enabled) this._clock();
         // TODO: add Db connection
-        this.cachedUsersCount = 0;
+        this.cacheduserCount = 0;
         this.guild = null;
     }
 
     update(guild) {
         console.log("    >> Calling update in Counter");
         this.guild = guild;
-        this.cachedUsersCount = guild.members.cache.size;
+        this.cacheduserCount = guild.members.cache.size;
     }
 
     _clock() {
         console.log("    >> Clocking user count");
-        if (this.guild && this.cachedUsersCount)
-            this.guild.channels.cache.get(this.config.usersCount.channelId).setName(this.config.usersCount.channelName.format(this.cachedUsersCount));
+        if (this.guild && this.cacheduserCount)
+            this.guild.channels.cache.get(this.config.userCount.channelId).setName(this.config.userCount.channelName.format(this.cacheduserCount));
         setTimeout(() => this._clock(), 60 * 10 * 1000);
     }
 }

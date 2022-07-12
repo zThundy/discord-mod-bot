@@ -1,7 +1,7 @@
 class Listener {
     constructor(config, client) {
         this.config = config;
-        this.counter = client.modules.get("usersCount");
+        this.counter = client.modules.get("userCount");
         this.reactions = client.modules.get("userReactions");
     }
 
@@ -35,7 +35,7 @@ class Listener {
                     switch(action) {
                         case "add":
                             message.content = message.content.split("add");
-                            var reactions = this.reactions.createArray(message.content[1])
+                            var reactions = this.reactions.createArray(message.content[1]);
                             if (typeof reactions === "string") {
                                 return message.reply(reactions)
                                     .then(msg => {

@@ -1,7 +1,7 @@
 class Listener {
     constructor(config, client) {
         this.config = config;
-        this.counter = client.modules.get("usersCount");
+        this.counter = client.modules.get("userCount");
     }
 
     run(client) {

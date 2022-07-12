@@ -36,8 +36,10 @@ client.login(config.token)
         client.modules = new Map();
         const Reactions = require("./classes/userReactions.js")
         client.modules.set("userReactions", new Reactions(config, client));
-        const ChannelCounter = require("./classes/usersCount.js");
-        client.modules.set("usersCount", new ChannelCounter(config, client));
+        const ChannelCounter = require("./classes/userCount.js");
+        client.modules.set("userCount", new ChannelCounter(config, client));
+        const UserRenamer = require("./classes/userRenamer.js");
+        client.modules.set("userRenamer", new UserRenamer(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);

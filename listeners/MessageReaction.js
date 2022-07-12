@@ -25,11 +25,11 @@ class Listener {
                                 reaction.message.guild.roles.fetch(r[0])
                                     .then(role => {
                                         // assign the role to the user
-                                        member.roles.add(role)
+                                        member.roles.add(role);
                                     })
                                     .catch(console.error);
                             })
-                            .catch(console.error);;
+                            .catch(console.error);
                     }
                 });
             }
@@ -43,7 +43,7 @@ class Listener {
                                 reaction.message.guild.roles.fetch(r[0])
                                     .then(role => {
                                         // remove the role from the user
-                                        member.roles.remove(role)
+                                        member.roles.remove(role);
                                     })
                                     .catch(console.error);
                             })

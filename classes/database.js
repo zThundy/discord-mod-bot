@@ -11,6 +11,7 @@ class SQL {
     _init() {
         this.db = new sqlite.Database(`./data/${this.config.database.filename}.db`);
         this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT, reactions TEXT)");
+        // this.db.run("CREATE TABLE IF NOT EXISTS nicks (guildId TEXT, userId TEXT, nick TEXT)");
     }
 
     getReactions() {
