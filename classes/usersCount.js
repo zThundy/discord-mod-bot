@@ -17,13 +17,13 @@ class Counter {
     }
 
     update(guild) {
-        console.log(">> Calling update in Counter");
+        console.log("    >> Calling update in Counter");
         this.guild = guild;
         this.cachedUsersCount = guild.members.cache.size;
     }
 
     _clock() {
-        console.log("Clocking users count");
+        console.log("    >> Clocking user count");
         if (this.guild && this.cachedUsersCount)
             this.guild.channels.cache.get(this.config.usersCount.channelId).setName(this.config.usersCount.channelName.format(this.cachedUsersCount));
         setTimeout(() => this._clock(), 60 * 10 * 1000);

@@ -2,16 +2,20 @@ class Reactions {
     constructor(config, client) {
         this.db = client.db;
         this.client = client;
+        this.reactions = [];
         this.db.getReactions()
             .then(reactions => {
+                // fill up the local data from the database
                 this.reactions = reactions;
+                // cache every reaction message
                 reactions.forEach(reaction => {
+                    this.reactions.push(reaction);
                     client.guilds.fetch(reaction.guildId)
                         .then(guild => {
                             guild.channels.fetch(reaction.channelId)
                                 .then(channel => {
                                     channel.messages.fetch(reaction.messageId)
-                                        .catch(() => this.__handleError(reaction.guildId, reaction.channelId, reaction.messageId));
+                                    .catch(() => this.__handleError(reaction.guildId, reaction.channelId, reaction.messageId));
                                 })
                                 .catch(() => this.__handleError(reaction.guildId, reaction.channelId, reaction.messageId));
                         })
@@ -19,8 +23,10 @@ class Reactions {
                 });
         });
     }
-
+    
     __handleError(guildId, channelId, messageId) {
+        console.error(`     >> Error while fetching message ${messageId} in channel ${channelId} in guild ${guildId}`);
+        console.error("     >> Removing reaction from database");
         this.db.removeReaction({
             guildId: guildId,
             channelId: channelId,

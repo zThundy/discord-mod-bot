@@ -10,7 +10,7 @@ class SQL {
 
     _init() {
         this.db = new sqlite.Database(`./data/${this.config.database.filename}.db`);
-        this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT, data TEXT)");
+        this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT, reactions TEXT)");
     }
 
     getReactions() {
@@ -29,7 +29,7 @@ class SQL {
          * @param {STRING} data.channelId
          * @param {STRING} data.messageId
          */
-        this.db.run(`INSERT INTO reactions (guildId, channelId, messageId, data) VALUES (?, ?, ?, ?)`, [data.guildId, data.channelId, data.messageId, data.reactions]);
+        this.db.run(`INSERT INTO reactions (guildId, channelId, messageId, reactions) VALUES (?, ?, ?, ?)`, [data.guildId, data.channelId, data.messageId, data.reactions]);
     }
 
     removeReaction(data) {

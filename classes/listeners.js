@@ -28,13 +28,13 @@ class Listeners {
 
     call(event, ...args) {
         try {
-            console.log("Calling listeners for " + event);
+            console.log("    >> Calling listeners for: " + event);
             if (this.listeners[event])
                 this.listeners[event].run(...args);
             else
-                console.error("No listener for " + event);
+                console.error("    >> No listener for event: " + event);
         } catch(e) {
-            console.error("ERROR ON INTERACTION: " + event);
+            console.error("    >> ERROR ON INTERACTION: " + event);
             console.error(e);
         }
     }
