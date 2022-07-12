@@ -13,9 +13,16 @@
     },
     "nicknames": {
         "enabled": true,
-        "ROLE_ID_HERE": "TEST | {0}"
+        "roles": {
+            "ROLE_ID_HERE": "PREFIX_HERE"
+        }
     },
     "database": {
         "filename": "database"
+    },
+    "status": {
+        "message": "YOUR_STATUS_MESSAGE_HERE",
+        "type": "YOUR_STATUS_TYPE_HERE",
+        "url": "YOUR_STATUS_URL_HERE"
     }
 }

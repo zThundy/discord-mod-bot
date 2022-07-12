@@ -12,6 +12,11 @@ class Listener {
                 this.counter.update(guild);
             }
         });
+
+        client.user.setActivity(this.config.status.message, {
+            type: this.config.status.type,
+            url: this.config.status.url
+        });
     }
 }
 
