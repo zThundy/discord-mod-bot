@@ -67,6 +67,8 @@ class Reactions {
                                 }
                             })
                             .catch(console.error);
+                        // delete the original message after the creation is done
+                        message.delete();
                     })
                     .catch(console.error);
             })

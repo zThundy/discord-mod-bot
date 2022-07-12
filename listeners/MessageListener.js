@@ -16,6 +16,11 @@ class Listener {
             message.member.roles.add(role);
         }
 
+        // check if the message is beeing sent from a bot
+        if (message.author.bot) return;
+        // check if the message is sent from someone that is not an admin
+        if (message.author.id !== this.confifg.ownerId) return;
+
         if (message.mentions.users.has(client.user.id)) {
             if (message.content.includes("reaction")) {
                 if (message.type === "REPLY") {
