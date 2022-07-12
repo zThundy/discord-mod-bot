@@ -8,7 +8,6 @@ class Listener {
     run(client, message) {
         if (message.guild.id !== this.config.guildId) return;
         this.counter.update(message.guild);
-        console.log("New message: " + message.content);
         
         if (message.type === "GUILD_MEMBER_JOIN") {
             // find specific role and add to user
@@ -20,15 +19,30 @@ class Listener {
         if (message.mentions.users.has(client.user.id)) {
             if (message.content.includes("reaction")) {
                 if (message.type === "REPLY") {
+                    // split the command
                     message.content = message.content.split("reaction")[1];
                     message.content = message.content.trim();
-                    switch(message.content) {
+                    // get the action that the user is trying to do
+                    var action = "";
+                    if (message.content.includes("add")) action = "add";
+                    if (message.content.includes("remove")) action = "remove";
+                    // apply logic to the action
+                    switch(action) {
                         case "add":
-                            message.content = message.content.split("add")[1];
+                            message.content = message.content.split("add");
+                            var reactions = this.reactions.createArray(message.content[1])
+                            if (typeof reactions === "string") {
+                                return message.reply(reactions)
+                                    .then(msg => {
+                                        message.delete();
+                                        setTimeout(() => msg.delete(), 10000);
+                                    });
+                            }
                             this.reactions.add(message, {
                                 guildId: message.guild.id,
                                 channelId: message.channel.id,
-                                messageId: message.reference.messageId
+                                messageId: message.reference.messageId,
+                                reactions: JSON.stringify(reactions)
                             });
                             break;
 

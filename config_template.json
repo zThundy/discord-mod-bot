@@ -6,5 +6,11 @@
         "enabled": true,
         "channelId": "CHANNEL_ID_HERE",
         "channelName": "💚 Users count: {0}"
+    },
+    "userReactions": {
+        "enabled": true
+    },
+    "database": {
+        "filename": "database"
     }
 }
