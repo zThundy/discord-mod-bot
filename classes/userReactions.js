@@ -6,7 +6,7 @@ class Reactions {
         this.db.getReactions()
             .then(reactions => {
                 // fill up the local data from the database
-                this.reactions = reactions;
+                // this.reactions = reactions;
                 // cache every reaction message
                 reactions.forEach(reaction => {
                     this.reactions.push(reaction);
@@ -63,7 +63,8 @@ class Reactions {
                         channel.messages.fetch(data.messageId)
                             .then(message => {
                                 for (var i in JSON.parse(data.reactions)) {
-                                    message.react(JSON.parse(data.reactions)[i][1]);
+                                    message.react(JSON.parse(data.reactions)[i][1])
+                                    .catch(console.error);
                                 }
                             })
                             .catch(console.error);
@@ -92,6 +93,14 @@ class Reactions {
                     channelId: data.channelId,
                     messageId: data.messageId
                 });
+                message.delete();
+                this.db.getReactions()
+                    .then(reactions => {
+                        // cache every reaction message
+                        reactions.forEach(reaction => {
+                            this.reactions.push(reaction);
+                        });
+                    });
                 return;
             }
         }
