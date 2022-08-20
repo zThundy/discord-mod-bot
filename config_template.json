@@ -11,6 +11,9 @@
     "userReactions": {
         "enabled": true
     },
+    "wordsFilter": {
+        "enabled": true
+    },
     "nicknames": {
         "enabled": true,
         "roles": {

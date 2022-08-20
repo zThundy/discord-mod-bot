@@ -3,11 +3,13 @@ class Listener {
         this.config = config;
         this.counter = client.modules.get("userCount");
         this.reactions = client.modules.get("userReactions");
+        this.wordFilter = client.modules.get("wordFilter");
     }
 
     run(client, message) {
         if (message.guild.id !== this.config.guildId) return;
         this.counter.update(message.guild);
+        if (!this.wordFilter.checkMessage(message)) return;
         
         if (message.type === "GUILD_MEMBER_JOIN") {
             // find specific role and add to user
