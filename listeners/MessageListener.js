@@ -9,7 +9,7 @@ class Listener {
     run(client, message) {
         if (message.guild.id !== this.config.guildId) return;
         this.counter.update(message.guild);
-        if (!this.wordFilter.checkMessage(message)) return;
+        if (this.config.wordsFilter.enabled) if (!this.wordFilter.checkMessage(message)) return;
         
         if (message.type === "GUILD_MEMBER_JOIN") {
             // find specific role and add to user
