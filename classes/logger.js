@@ -30,7 +30,7 @@ class Logger {
         const embed = new Discord.MessageEmbed()
             .setTitle(`Message sent by ***${message.author.tag}*** in ***${message.channel.name}***`)
             .setColor("#00ff00")
-            .setAuthor({ name: message.author.username, iconURL: message.author.avatarURL() })
+            .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
                 { name: "Message", value: "```" + message.content + "```" },
                 { name: "Link", value: `[Go to message](${message.url})` },
@@ -51,7 +51,7 @@ class Logger {
         const embed = new Discord.MessageEmbed()
             .setTitle(`Message deleted by ***${message.author.tag}*** in ***${message.channel.name}***`)
             .setColor("#ff0000")
-            .setAuthor({ name: message.author.username, iconURL: message.author.avatarURL() })
+            .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
                 { name: "Message", value: "```" + message.content + "```" },
                 { name: "Channel", value: `<#${message.channel.id}>` },
@@ -71,7 +71,7 @@ class Logger {
         const embed = new Discord.MessageEmbed()
             .setTitle(`Message edited by ***${newMessage.author.tag}*** in ***${newMessage.channel.name}***`)
             .setColor("#0000ff")
-            .setAuthor({ name: oldMessage.author.username, iconURL: oldMessage.author.avatarURL() })
+            .setAuthor({ name: oldMessage.author.username, iconURL: oldMessage.author.displayAvatarURL() })
             .addFields(
                 { name: "Old Message", value: "```" + oldMessage.content + "```" },
                 { name: "New Message", value: "```" + newMessage.content + "```" },
@@ -138,7 +138,7 @@ class Logger {
     messageReactionAdd(client, reaction, user) {
         const embed = new Discord.MessageEmbed()
             .setTitle(`User ***${user.tag}*** added reaction to message`)
-            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
             .setColor("#00ff00")
             .addFields(
                 { name: "Username", value: "```" + user.username + "```" },
@@ -155,7 +155,7 @@ class Logger {
     messageReactionRemove(client, reaction, user) {
         const embed = new Discord.MessageEmbed()
             .setTitle(`User ***${user.tag}*** removed reaction from message`)
-            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
             .setColor("#ff0000")
             .addFields(
                 { name: "Username", value: "```" + user.username + "```" },
@@ -171,8 +171,8 @@ class Logger {
 
     guildMemberAdd(client, member) {
         const embed = new Discord.MessageEmbed()
-            .setTitle(`User ***${member.tag}*** joined the server`)
-            .setAuthor({ name: member.displayName, iconURL: member.avatarURL() })
+            .setTitle(`User ***${member.displayName}*** joined the server`)
+            .setAuthor({ name: member.displayName, iconURL: member.displayAvatarURL() })
             .setColor("#00ff00")
             .addFields(
                 { name: "Username", value: "```" + member.displayName + "```" },
@@ -186,8 +186,8 @@ class Logger {
 
     guildMemberRemove(client, member) {
         const embed = new Discord.MessageEmbed()
-            .setTitle(`User ***${member.tag}*** left the server`)
-            .setAuthor({ name: member.displayName, iconURL: member.avatarURL() })
+            .setTitle(`User ***${member.displayName}*** left the server`)
+            .setAuthor({ name: member.displayName, iconURL: member.displayAvatarURL() })
             .setColor("#ff0000")
             .addFields(
                 { name: "Username", value: "```" + member.displayName + "```" },
@@ -202,8 +202,8 @@ class Logger {
 
     guildMemberUpdate(client, oldMember, newMember) {
         const embed = new Discord.MessageEmbed()
-            .setTitle(`User ***${newMember.tag}*** got updated`)
-            .setAuthor({ name: newMember.displayName, iconURL: newMember.avatarURL() })
+            .setTitle(`User ***${newMember.displayName}*** got updated`)
+            .setAuthor({ name: newMember.displayName, iconURL: newMember.displayAvatarURL() })
             .setColor("#0000ff")
             .addFields(
                 { name: "Old Username", value: "```" + oldMember.displayName + "```", inline: true },
