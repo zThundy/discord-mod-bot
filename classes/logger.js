@@ -34,7 +34,7 @@ class Logger {
         if (message.cleanContent.length === 0) _messageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message sent by ***${message.author.displayName}*** in ***${message.channel.name}***`)
+            .setTitle(`Message sent by ***${message.author.username}*** in ***${message.channel.name}***`)
             .setColor("#00ff00")
             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
@@ -62,7 +62,7 @@ class Logger {
         if (message.cleanContent.length === 0) _messageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message deleted by ***${message.author.displayName}*** in ***${message.channel.name}***`)
+            .setTitle(`Message deleted by ***${message.author.username}*** in ***${message.channel.name}***`)
             .setColor("#ff0000")
             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
@@ -94,7 +94,7 @@ class Logger {
         if (newMessage.cleanContent.length === 0) _newMessageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message edited by ***${newMessage.author.displayName}*** in ***${newMessage.channel.name}***`)
+            .setTitle(`Message edited by ***${newMessage.author.username}*** in ***${newMessage.channel.name}***`)
             .setColor("#0000ff")
             .setAuthor({ name: oldMessage.author.username, iconURL: oldMessage.author.displayAvatarURL() })
             .addFields(
