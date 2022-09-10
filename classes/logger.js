@@ -168,6 +168,55 @@ class Logger {
 
         return embed;
     }
+
+    guildMemberAdd(client, member) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${member.tag}*** joined the server`)
+            .setAuthor({ name: member.displayName, iconURL: member.avatarURL() })
+            .setColor("#00ff00")
+            .addFields(
+                { name: "Username", value: "```" + member.displayName + "```" },
+                { name: "ID", value: "```" + member.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    guildMemberRemove(client, member) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${member.tag}*** left the server`)
+            .setAuthor({ name: member.displayName, iconURL: member.avatarURL() })
+            .setColor("#ff0000")
+            .addFields(
+                { name: "Username", value: "```" + member.displayName + "```" },
+                { name: "Roles", value: "```" + member.roles.cache.map(role => role.name).join(" | ") + "```" },
+                { name: "ID", value: "```" + member.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    guildMemberUpdate(client, oldMember, newMember) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${newMember.tag}*** got updated`)
+            .setAuthor({ name: newMember.displayName, iconURL: newMember.avatarURL() })
+            .setColor("#0000ff")
+            .addFields(
+                { name: "Old Username", value: "```" + oldMember.displayName + "```", inline: true },
+                { name: "New Username", value: "```" + newMember.displayName + "```", inline: true },
+                { name: "Old Roles", value: "```" + oldMember.roles.cache.map(role => role.name).join(" | ") + "```" },
+                { name: "New Roles", value: "```" + newMember.roles.cache.map(role => role.name).join(" | ") + "```" },
+                { name: "ID", value: "```" + newMember.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
 }
 
 module.exports = Logger;
