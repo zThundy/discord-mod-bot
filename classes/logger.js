@@ -57,9 +57,7 @@ class Logger {
 
         var _messageName = (message.type === "DEFAULT" || message.type === "REPLY" ? "Message" : "Type")
         var _messageValue = "```" + (message.type === "DEFAULT" || message.type === "REPLY" ? message.content : message.type) + "```"
-        var _messageCleanContent = "```" + message.cleanContent + "```"
         if (message.content.length === 0) _messageValue = "```Unknown```"
-        if (message.cleanContent.length === 0) _messageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
             .setTitle(`Message deleted by ***${message.author.username}*** in ***${message.channel.name}***`)
@@ -67,7 +65,6 @@ class Logger {
             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
                 { name: _messageName, value: _messageValue, inline: true },
-                { name: "Clean Content", value: _messageCleanContent, inline: true },
                 { name: "Channel", value: `<#${message.channel.id}>` },
             )
             .setTimestamp()
@@ -164,6 +161,11 @@ class Logger {
     }
 
     messageReactionAdd(client, reaction, user) {
+        if (user.bot) return;
+        if (user.id === this.userId) return;
+        if (reaction.message.channel.type === "DM") return;
+        if (reaction.message.channel.id === this.config.logs.channelId) return;
+
         const embed = new Discord.MessageEmbed()
             .setTitle(`User ***${user.tag}*** added reaction to message`)
             .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
@@ -181,6 +183,11 @@ class Logger {
     }
 
     messageReactionRemove(client, reaction, user) {
+        if (user.bot) return;
+        if (user.id === this.userId) return;
+        if (reaction.message.channel.type === "DM") return;
+        if (reaction.message.channel.id === this.config.logs.channelId) return;
+
         const embed = new Discord.MessageEmbed()
             .setTitle(`User ***${user.tag}*** removed reaction from message`)
             .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
