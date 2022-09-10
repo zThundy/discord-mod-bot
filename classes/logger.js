@@ -22,6 +22,7 @@ class Logger {
     }
 
     messageCreate(client, message) {
+        if (message.author.bot) return;
         if (message.author.id === this.userId) return;
         if (message.channel.type === "DM") return;
         if (message.channel.id === this.config.logs.channelId) return;
@@ -35,12 +36,14 @@ class Logger {
                 { name: "Link", value: `[Go to message](${message.url})` },
                 { name: "Channel", value: `<#${message.channel.id}>` },
             )
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
 
         return embed;
     }
 
     messageDelete(client, message) {
+        if (message.author.bot) return;
         if (message.author.id === this.userId) return;
         if (message.channel.type === "DM") return;
         if (message.channel.id === this.config.logs.channelId) return;
@@ -53,12 +56,14 @@ class Logger {
                 { name: "Message", value: "```" + message.content + "```" },
                 { name: "Channel", value: `<#${message.channel.id}>` },
             )
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
 
         return embed;
     }
 
     messageUpdate(client, oldMessage, newMessage) {
+        if (newMessage.author.bot) return;
         if (newMessage.author.id === this.userId) return;
         if (newMessage.channel.type === "DM") return;
         if (newMessage.channel.id === this.config.logs.channelId) return;
@@ -72,7 +77,94 @@ class Logger {
                 { name: "New Message", value: "```" + newMessage.content + "```" },
                 { name: "Channel", value: `<#${newMessage.channel.id}>` },
             )
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    roleCreate(client, role) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`New role created`)
+            .setColor(role.hexColor)
+            .addFields(
+                { name: "Role name", value: "```" + role.name + "```" },
+                { name: "Role ID", value: "```" + role.id + "```" },
+                { name: "Role color", value: "```" + role.hexColor + "```" },
+                { name: "Role position", value: "```" + role.position + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    roleDelete(client, role) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Role deleted`)
+            .setColor(role.hexColor)
+            .addFields(
+                { name: "Role name", value: "```" + role.name + "```" },
+                { name: "Role ID", value: "```" + role.id + "```" },
+                { name: "Role color", value: "```" + role.hexColor + "```" },
+                { name: "Role position", value: "```" + role.position + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    roleUpdate(client, oldRole, newRole) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Edited role`)
+            .setColor(newRole.hexColor)
+            .addFields(
+                { name: "Old role name", value: "```" + oldRole.name + "```", inline: true },
+                { name: "New role name", value: "```" + newRole.name + "```", inline: true },
+                { name: "Old role ID", value: "```" + oldRole.id + "```", inline: true },
+                { name: "New role ID", value: "```" + newRole.id + "```", inline: true },
+                { name: "Old role color", value: "```" + oldRole.hexColor + "```", inline: true },
+                { name: "New role color", value: "```" + newRole.hexColor + "```", inline: true },
+                { name: "Old role position", value: "```" + oldRole.position + "```", inline: true },
+                { name: "New role position", value: "```" + newRole.position + "```", inline: true },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    messageReactionAdd(client, reaction, user) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${user.tag}*** added reaction to message`)
+            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setColor("#00ff00")
+            .addFields(
+                { name: "Username", value: "```" + user.username + "```" },
+                { name: "Emoji", value: "```" + reaction.emoji.toString() + "```" },
+                { name: "Link", value: `[Go to message](${reaction.message.url})` },
+                { name: "Channel", value: `<#${reaction.message.channel.id}>` },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    messageReactionRemove(client, reaction, user) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${user.tag}*** removed reaction from message`)
+            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setColor("#ff0000")
+            .addFields(
+                { name: "Username", value: "```" + user.username + "```" },
+                { name: "Emoji", value: "```" + reaction.emoji.toString() + "```" },
+                { name: "Link", value: `[Go to message](${reaction.message.url})` },
+                { name: "Channel", value: `<#${reaction.message.channel.id}>` },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
 
         return embed;
     }
