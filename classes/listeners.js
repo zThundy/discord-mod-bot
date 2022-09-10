@@ -42,7 +42,7 @@ class Listeners {
     call(event, ...args) {
         try {
             if (config.logs.events[event])
-                this.logger.log(event);
+                this.logger.run(event, ...args);
             console.log("    >> Calling listeners for: " + event);
             if (this.listeners[event])
                 this.listeners[event].run(event, ...args);
