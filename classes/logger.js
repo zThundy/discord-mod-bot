@@ -34,14 +34,14 @@ class Logger {
         if (message.cleanContent.length === 0) _messageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message sent by ***${message.author.tag}*** in ***${message.channel.name}***`)
+            .setTitle(`Message sent by ***${message.author.displayName}*** in ***${message.channel.name}***`)
             .setColor("#00ff00")
             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
-                { name: _messageName, value: _messageValue },
+                { name: _messageName, value: _messageValue, inline: true },
+                { name: "Clean Content", value: _messageCleanContent, inline: true },
                 { name: "Link", value: `[Go to message](${message.url})` },
                 { name: "Channel", value: `<#${message.channel.id}>` },
-                { name: "Clean Content", value: _messageCleanContent },
             )
             .setTimestamp()
             .setFooter({ text: "Made with ❤️ by zThundy" });
@@ -62,13 +62,13 @@ class Logger {
         if (message.cleanContent.length === 0) _messageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message deleted by ***${message.author.tag}*** in ***${message.channel.name}***`)
+            .setTitle(`Message deleted by ***${message.author.displayName}*** in ***${message.channel.name}***`)
             .setColor("#ff0000")
             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .addFields(
-                { name: _messageName, value: _messageValue },
+                { name: _messageName, value: _messageValue, inline: true },
+                { name: "Clean Content", value: _messageCleanContent, inline: true },
                 { name: "Channel", value: `<#${message.channel.id}>` },
-                { name: "Clean Content", value: "```" + message.cleanContent + "```" },
             )
             .setTimestamp()
             .setFooter({ text: "Made with ❤️ by zThundy" });
@@ -94,16 +94,16 @@ class Logger {
         if (newMessage.cleanContent.length === 0) _newMessageCleanContent = "```Unknown```"
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(`Message edited by ***${newMessage.author.tag}*** in ***${newMessage.channel.name}***`)
+            .setTitle(`Message edited by ***${newMessage.author.displayName}*** in ***${newMessage.channel.name}***`)
             .setColor("#0000ff")
             .setAuthor({ name: oldMessage.author.username, iconURL: oldMessage.author.displayAvatarURL() })
             .addFields(
                 { name: _oldMessageName, value: _oldMessageValue },
                 { name: _newMessageName, value: _newMessageValue },
-                { name: "Channel", value: `<#${newMessage.channel.id}>` },
-                { name: "Link", value: `[Go to message](${newMessage.url})` },
                 { name: "Old Clean Content", value: _oldMessageCleanContent },
                 { name: "New Clean Content", value: _newMessageCleanContent },
+                { name: "Channel", value: `<#${newMessage.channel.id}>` },
+                { name: "Link", value: `[Go to message](${newMessage.url})` },
             )
             .setTimestamp()
             .setFooter({ text: "Made with ❤️ by zThundy" });
