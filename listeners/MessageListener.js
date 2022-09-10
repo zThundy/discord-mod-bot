@@ -6,11 +6,28 @@ class Listener {
         this.wordFilter = client.modules.get("wordFilter");
     }
 
-    run(client, message) {
+    run(event, ...args) {
+        switch(event) {
+            case "messageCreate":
+                this.messageCreate(...args);
+                break;
+            case  "messageDelete":
+                this.messageDelete(...args);
+                break;
+            case "messageUpdate":
+                this.messageUpdate(...args);
+                break;
+        }
+    }
+
+    messageCreate(client, message) {
+        // check if the message is from the configured guild
         if (message.guild.id !== this.config.guildId) return;
         this.counter.update(message.guild);
+        // check if the word filter is enabled in the config file
         if (this.config.wordsFilter.enabled) if (!this.wordFilter.checkMessage(message)) return;
         
+        // check if the sent message is a user joining the server, if so, add the role
         if (message.type === "GUILD_MEMBER_JOIN") {
             // find specific role and add to user
             const role = message.guild.roles.cache.find(role => role.id === this.config.userRole);
@@ -70,6 +87,18 @@ class Listener {
                 }
             }
         }
+    }
+
+    messageDelete(client, message) {
+        // check if the message is from the configured guild
+        if (message.guild.id !== this.config.guildId) return;
+        this.counter.update(message.guild);
+    }
+
+    messageUpdate(client, oldMessage, newMessage) {
+        // check if the message is from the configured guild
+        if (oldMessage.guild.id !== this.config.guildId) return;
+        this.counter.update(oldMessage.guild);
     }
 }
 

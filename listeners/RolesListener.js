@@ -1,8 +1,8 @@
 class Listener {
-    constructor(config) {
+    constructor(config, client) {
     }
 
-    run(client, user) {
+    run(event) {
     }
 }
 

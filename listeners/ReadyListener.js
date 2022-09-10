@@ -4,7 +4,7 @@ class Listener {
         this.counter = client.modules.get("userCount");
     }
 
-    run(client) {
+    run(event, client) {
         client.guilds.cache.forEach(guild => {
             if (guild.id !== this.config.guildId) {
                 guild.leave();

@@ -25,7 +25,8 @@ const client = new discord.Client({
         "DIRECT_MESSAGE_TYPING",
         "GUILD_SCHEDULED_EVENTS"
     ]
-})
+});
+
 // autenticate the discord client
 client.login(config.token)
     .then(() => {
@@ -47,12 +48,31 @@ client.login(config.token)
         const listeners = new Listener(client);
         
         // better to call this here than using the actual event
-        listeners.call("ready", client)
+        listeners.call("ready", client);
         // client.on("ready", () => listeners.call("ready", client));
+        // messages handler
         client.on("messageCreate", (message) => listeners.call("messageCreate", client, message));
+        client.on("messageUpdate", (oldMessage, newMessage) => listeners.call("messageUpdate", client, oldMessage, newMessage));
+        client.on("messageDelete", (message) => listeners.call("messageDelete", client, message));
+        // guild member events
         client.on("guildMemberAdd", (user) => listeners.call("guildMemberAdd", client, user));
-        client.on("interactionCreate", (interaction) => listeners.call("interactionCreate", client, interaction));
+        client.on("guildMemberRemove", (user) => listeners.call("guildMemberRemove", client, user));
+        client.on("guildMemberUpdate", (oldUser, newUser) => listeners.call("guildMemberUpdate", client, oldUser, newUser));
+        // role events
+        client.on("roleCreate", (role) => listeners.call("roleCreate", client, role));
+        client.on("roleDelete", (role) => listeners.call("roleDelete", client, role));
+        client.on("roleUpdate", (oldRole, newRole) => listeners.call("roleUpdate", client, oldRole, newRole));
+        // channel events
+        client.on("channelCreate", (channel) => listeners.call("channelCreate", client, channel));
+        client.on("channelDelete", (channel) => listeners.call("channelDelete", client, channel));
+        client.on("channelUpdate", (oldChannel, newChannel) => listeners.call("channelUpdate", client, oldChannel, newChannel));
+        // guild events
         client.on("guildCreate", (guild) => listeners.call("guildCreate", client, guild));
-        client.on("messageReactionAdd", (reaction, user) => listeners.call("messageReactionAdd", client, true, reaction, user));
-        client.on("messageReactionRemove", (reaction, user) => listeners.call("messageReactionAdd", client, false, reaction, user));
+        client.on("guildDelete", (guild) => listeners.call("guildDelete", client, guild));
+        client.on("guildUpdate", (oldGuild, newGuild) => listeners.call("guildUpdate", client, oldGuild, newGuild));
+        // interactions
+        client.on("interactionCreate", (interaction) => listeners.call("interactionCreate", client, interaction));
+        // message reactions
+        client.on("messageReactionAdd", (reaction, user) => listeners.call("messageReactionAdd", client, reaction, user));
+        client.on("messageReactionRemove", (reaction, user) => listeners.call("messageReactionRemove", client, reaction, user));
     });

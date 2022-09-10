@@ -20,6 +20,29 @@
             "ROLE_ID_HERE": "PREFIX_HERE"
         }
     },
+    "logs": {
+        "enabled": true,
+        "channelId": "CHANNEL_ID_HERE",
+        "events": {
+            "guildMemberAdd": true,
+            "guildMemberRemove": true,
+            "guildMemberUpdate": true,
+            "messageDelete": true,
+            "messageCreate": true,
+            "messageUpdate": true,
+            "roleCreate": true,
+            "roleDelete": true,
+            "roleUpdate": true,
+            "channelCreate": true,
+            "channelDelete": true,
+            "channelUpdate": true,
+            "guildCreate": true,
+            "guildDelete": true,
+            "guildUpdate": true,
+            "messageReactionAdd": true,
+            "messageReactionRemove": true
+        }
+    },
     "database": {
         "filename": "database"
     },
