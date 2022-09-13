@@ -5,6 +5,7 @@ const InteractionListener = require('../listeners/InteractionListener.js');
 const GuildListener = require('../listeners/GuildListener.js');
 const MessageReactionListener = require('../listeners/MessageReaction.js');
 const RolesListener = require("../listeners/RolesListener.js");
+const VoiceStateUpdate = require("../listeners/VoiceListener.js");
 
 const cLoader = require("../classes/configLoader.js");
 const config = new cLoader().getConfig();
@@ -30,6 +31,7 @@ class Listeners {
         this.register("roleCreate", new RolesListener(config, client));
         this.register("roleDelete", new RolesListener(config, client));
         this.register("roleUpdate", new RolesListener(config, client));
+        this.register("voiceStateUpdate", new VoiceStateUpdate(config, client));
 
         this.logger = new Logger(config, client);
     }

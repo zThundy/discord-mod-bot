@@ -252,6 +252,22 @@ class Logger {
 
         return embed;
     }
+
+    voiceStateUpdate(client, oldState, newState) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`User ***${newState.member.displayName}*** voicestate changed`)
+            .setAuthor({ name: newState.member.displayName, iconURL: newState.member.displayAvatarURL() })
+            .setColor("#0000ff")
+            .addFields(
+                { name: "Old Channel", value: "```" + (oldState.channel ? oldState.channel.name : "None") + "```", inline: true },
+                { name: "New Channel", value: "```" + (newState.channel ? newState.channel.name : "None") + "```", inline: true },
+                { name: "ID", value: "```" + newState.member.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
 }
 
 module.exports = Logger;

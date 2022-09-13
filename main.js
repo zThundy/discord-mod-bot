@@ -75,4 +75,6 @@ client.login(config.token)
         // message reactions
         client.on("messageReactionAdd", (reaction, user) => listeners.call("messageReactionAdd", client, reaction, user));
         client.on("messageReactionRemove", (reaction, user) => listeners.call("messageReactionRemove", client, reaction, user));
+        // voice states
+        client.on("voiceStateUpdate", (oldState, newState) => listeners.call("voiceStateUpdate", client, oldState, newState));
     });

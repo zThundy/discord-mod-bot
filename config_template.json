@@ -40,7 +40,8 @@
             "guildDelete": true,
             "guildUpdate": true,
             "messageReactionAdd": true,
-            "messageReactionRemove": true
+            "messageReactionRemove": true,
+            "voiceStateUpdate": true
         }
     },
     "database": {
