@@ -45,6 +45,8 @@ client.login(config.token)
         client.modules.set("wordFilter", new WordFilter(config, client));
         const Cron = require("./classes/cron.js");
         client.modules.set("cron", new Cron(config, client));
+        const Twitch = require("./classes/twitch.js");
+        client.modules.set("twitch", new Twitch(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);

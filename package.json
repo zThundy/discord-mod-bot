@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.8.1",
+    "request-promise": "^4.2.6",
     "sqlite3": "^5.0.8"
   }
 }

@@ -12,7 +12,7 @@ class Cronjob {
         });
     }
 
-    add(ms, fn) {
+    add(ms, fn, firstFire = false) {
         const uid = this.uuid();
         const cb = () => {
             clearTimeout(timeout);
@@ -22,6 +22,7 @@ class Cronjob {
         }
         let timeout = setTimeout(cb, ms)
         this.cronjobs[uid] = { timeout, ms, fn };
+        if (firstFire) fn();
         return uid;
     }
 
