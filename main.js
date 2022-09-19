@@ -43,6 +43,8 @@ client.login(config.token)
         client.modules.set("userRenamer", new UserRenamer(config, client));
         const WordFilter = require("./classes/wordFilter.js");
         client.modules.set("wordFilter", new WordFilter(config, client));
+        const Cron = require("./classes/cron.js");
+        client.modules.set("cron", new Cron(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);
