@@ -145,13 +145,13 @@ class Logger {
             .setTitle(`Edited role`)
             .setColor(newRole.hexColor)
             .addFields(
-                { name: "Old role name", value: "```" + oldRole.name + "```", inline: true },
+                { name: "Old role name", value: "```" + oldRole.name + "```", inline: false },
                 { name: "New role name", value: "```" + newRole.name + "```", inline: true },
-                { name: "Old role ID", value: "```" + oldRole.id + "```", inline: true },
+                { name: "Old role ID", value: "```" + oldRole.id + "```", inline: false },
                 { name: "New role ID", value: "```" + newRole.id + "```", inline: true },
-                { name: "Old role color", value: "```" + oldRole.hexColor + "```", inline: true },
+                { name: "Old role color", value: "```" + oldRole.hexColor + "```", inline: false },
                 { name: "New role color", value: "```" + newRole.hexColor + "```", inline: true },
-                { name: "Old role position", value: "```" + oldRole.position + "```", inline: true },
+                { name: "Old role position", value: "```" + oldRole.position + "```", inline: false },
                 { name: "New role position", value: "```" + newRole.position + "```", inline: true },
             )
             .setTimestamp()
@@ -290,9 +290,9 @@ class Logger {
             .setAuthor({ name: newChannel.name, iconURL: newChannel.guild.iconURL() })
             .setColor("#0000ff")
             .addFields(
-                { name: "Old Name", value: "```" + oldChannel.name + "```", inline: true },
+                { name: "Old Name", value: "```" + oldChannel.name + "```", inline: false },
                 { name: "New Name", value: "```" + newChannel.name + "```", inline: true },
-                { name: "Old Type", value: "```" + oldChannel.type + "```", inline: true },
+                { name: "Old Type", value: "```" + oldChannel.type + "```", inline: false },
                 { name: "New Type", value: "```" + newChannel.type + "```", inline: true },
                 { name: "ID", value: "```" + newChannel.id + "```" },
             )
