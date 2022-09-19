@@ -12,6 +12,7 @@
         "enabled": true,
         "checkEveryMinutes": 10,
         "discordChannelId": "YOUR_DISCORD_CHANNEL_ID_HERE",
+        "tagRole": "ROLE_ID_HERE",
         "defaultMessage": "Hey, **{0}** is now live on Twitch! Go check it out!\n",
         "channelNames": [
             {
@@ -23,7 +24,6 @@
                 "tag": false
             }
         ],
-        "tagRole": "ROLE_ID_HERE",
         "clientID": "YOUR_CLIENT_ID_HERE",
         "clientSecret": "YOUR_CLIENT_SECRET_HERE"
     },
