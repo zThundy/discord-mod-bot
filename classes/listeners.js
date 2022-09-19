@@ -6,6 +6,7 @@ const GuildListener = require('../listeners/GuildListener.js');
 const MessageReactionListener = require('../listeners/MessageReaction.js');
 const RolesListener = require("../listeners/RolesListener.js");
 const VoiceStateUpdate = require("../listeners/VoiceListener.js");
+const ChannelListener = require("../listeners/ChannelListener.js");
 
 const cLoader = require("../classes/configLoader.js");
 const config = new cLoader().getConfig();
@@ -32,6 +33,9 @@ class Listeners {
         this.register("roleDelete", new RolesListener(config, client));
         this.register("roleUpdate", new RolesListener(config, client));
         this.register("voiceStateUpdate", new VoiceStateUpdate(config, client));
+        this.register("channelCreate", new ChannelListener(config, client));
+        this.register("channelDelete", new ChannelListener(config, client));
+        this.register("channelUpdate", new ChannelListener(config, client));
 
         this.logger = new Logger(config, client);
     }
@@ -49,9 +53,9 @@ class Listeners {
             if (this.listeners[event])
                 this.listeners[event].run(event, ...args);
             else
-                console.error("    >> No listener for event: " + event);
+                console.error("         >> No listener for event: " + event);
         } catch(e) {
-            console.error("    >> ERROR ON INTERACTION: " + event);
+            console.error("         >> ERROR ON INTERACTION: " + event);
             console.error(e);
         }
     }

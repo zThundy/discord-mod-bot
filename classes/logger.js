@@ -268,6 +268,54 @@ class Logger {
 
         return embed;
     }
+
+    channelCreate(client, channel) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Channel ***${channel.name}*** got created`)
+            .setAuthor({ name: channel.name, iconURL: channel.guild.iconURL() })
+            .setColor("#00ff00")
+            .addFields(
+                { name: "Channel", value: "```" + channel.name + "```" },
+                { name: "ID", value: "```" + channel.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    channelUpdate(client, oldChannel, newChannel) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Channel ***${newChannel.name}*** got updated`)
+            .setAuthor({ name: newChannel.name, iconURL: newChannel.guild.iconURL() })
+            .setColor("#0000ff")
+            .addFields(
+                { name: "Old Name", value: "```" + oldChannel.name + "```", inline: true },
+                { name: "New Name", value: "```" + newChannel.name + "```", inline: true },
+                { name: "Old Type", value: "```" + oldChannel.type + "```", inline: true },
+                { name: "New Type", value: "```" + newChannel.type + "```", inline: true },
+                { name: "ID", value: "```" + newChannel.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
+
+    channelDelete(client, channel) {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Channel ***${channel.name}*** got deleted`)
+            .setAuthor({ name: channel.name, iconURL: channel.guild.iconURL() })
+            .setColor("#ff0000")
+            .addFields(
+                { name: "Channel", value: "```" + channel.name + "```" },
+                { name: "ID", value: "```" + channel.id + "```" },
+            )
+            .setTimestamp()
+            .setFooter({ text: "Made with ❤️ by zThundy" });
+
+        return embed;
+    }
 }
 
 module.exports = Logger;
