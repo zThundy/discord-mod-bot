@@ -1,4 +1,5 @@
 const request = require("request-promise");
+const { MessageAttachment } = require("discord.js");
 
 class TwitchApi {
     constructor(config, client) {
@@ -98,14 +99,14 @@ class TwitchApi {
 
         const embed = {
             title: stream.user_name + " is live!",
-            url: stream.url,
+            url: `https://twitch.tv/${stream.user_name}`,
             color: 0x6441a5,
         };
-        if (stream.thumbnail_url) {
-            embed.thumbnail = {
-                url: stream.thumbnail_url.replace("{width}", "1280").replace("{height}", "720")
-            };
-        }
+        // if (stream.thumbnail_url) {
+        //     embed.thumbnail = {
+        //         url: stream.thumbnail_url.replace("{width}", "1280").replace("{height}", "720")
+        //     };
+        // }
         if (stream.title) {
             embed.fields = [
                 { 
@@ -129,11 +130,17 @@ class TwitchApi {
                 icon_url: stream.profile_image_url
             };
         }
+        if (stream.thumbnail_url) {
+            embed.image = {
+                url: stream.thumbnail_url.replace("{width}", "1280").replace("{height}", "720")
+            };
+        }
         if (stream.viewer_count) {
             embed.footer = {
                 text: "Made with ❤️ by zThundy__"
             };
         }
+
         return embed;
     }
 }
