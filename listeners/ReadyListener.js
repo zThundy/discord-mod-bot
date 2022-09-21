@@ -38,10 +38,8 @@ class Listener {
                 var cacheIndex = i;
 
                 this.twitch.checkStream(this.config.twitch.channelNames[cacheIndex].name)
-                    .then(r => {
-                        this.twitch.updateResponse(r.res);
-                        
-                        if (r.data) {
+                    .then(stream => {
+                        if (stream) {
                             client.guilds.fetch(this.config.guildId)
                                 .then(guild => {
                                     guild.channels.fetch(this.config.twitch.channelId)
@@ -51,20 +49,20 @@ class Listener {
                                                 // update the isLive status
                                                 this.config.twitch.channelNames[cacheIndex].isLive = true;
                                                 // create the embed
-                                                const embed = this.twitch.getEmbed(r.data);
+                                                const embed = this.twitch.getEmbed(stream);
                                                 // send the message
                                                 if (this.config.twitch.channelNames[cacheIndex].tag) {
-                                                    channels.find(channel => channel.id === this.config.twitch.discordChannelId)
-                                                        .send({
-                                                            content: this.config.twitch.defaultMessage.format(r.data.user_name) + "<@&" + this.config.twitch.tagRole + ">",
-                                                            embeds: [embed]
-                                                        });
+                                                    // channels.find(channel => channel.id === this.config.twitch.discordChannelId)
+                                                    //     .send({
+                                                    //         content: this.config.twitch.defaultMessage.format(stream.user_name) + "<@&" + this.config.twitch.tagRole + ">",
+                                                    //         embeds: [embed]
+                                                    //     });
                                                 } else {
-                                                    channels.find(channel => channel.id === this.config.twitch.discordChannelId)
-                                                        .send({
-                                                            content: this.config.twitch.defaultMessage.format(r.data.user_name),
-                                                            embeds: [embed]
-                                                        });
+                                                    // channels.find(channel => channel.id === this.config.twitch.discordChannelId)
+                                                    //     .send({
+                                                    //         content: this.config.twitch.defaultMessage.format(stream.user_name),
+                                                    //         embeds: [embed]
+                                                    //     });
                                                 }
                                             }
                                         })

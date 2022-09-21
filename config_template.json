@@ -24,7 +24,7 @@
                 "tag": false
             }
         ],
-        "clientID": "YOUR_CLIENT_ID_HERE",
+        "clientId": "YOUR_CLIENT_ID_HERE",
         "clientSecret": "YOUR_CLIENT_SECRET_HERE"
     },
     "userReactions": {

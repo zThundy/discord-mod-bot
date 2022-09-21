@@ -1,4 +1,4 @@
-const request = require("request-promise");
+const https = require("https");
 const { MessageAttachment } = require("discord.js");
 
 class TwitchApi {
@@ -18,29 +18,75 @@ class TwitchApi {
         this.tokenExpires = null;
     }
 
+    // function to get the oauth token using https module
     getToken() {
         return new Promise((resolve, reject) => {
-            if (!this.token || this.tokenExpires < Date.now()) {
-                console.log("    >> Getting new twitch token. Non existing or expired?");
+            if (this.token && this.tokenExpires > Date.now()) {
+                console.log("    >> Using cached token");
+                resolve(this.token);
+            } else {
+                console.log("    >> Getting new token");
+                const data = JSON.stringify({
+                    client_id: this.config.clientId,
+                    client_secret: this.config.clientSecret,
+                    grant_type: "client_credentials"
+                });
                 const options = {
-                    method: 'POST',
-                    url: 'https://id.twitch.tv/oauth2/token',
-                    qs: {
-                        client_id: this.config.clientID,
-                        client_secret: this.config.clientSecret,
-                        grant_type: 'client_credentials'
+                    hostname: "id.twitch.tv",
+                    port: 443,
+                    path: "/oauth2/token",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": data.length
                     }
                 };
-                
-                request(options, function (error, res, body) {
-                    if (error) return reject(error);
-                    body = JSON.parse(body);
-                    resolve(body.access_token, body.expires_in);
+                const req = https.request(options, res => {
+                    res.on("data", d => {
+                        const parsed = JSON.parse(d);
+                        this.token = parsed.access_token;
+                        this.tokenExpires = Date.now() + (parsed.expires_in * 1000);
+                        resolve(this.token);
+                    });
                 });
-            } else {
-                console.log("    >> Getting cached twitch token");
-                resolve(this.token);
+                req.on("error", error => {
+                    reject(error);
+                });
+                req.write(data);
+                req.end();
             }
+        });
+    }
+
+    checkStream(name) {
+        return new Promise((resolve, reject) => {
+            this.getToken().then(token => {
+                const options = {
+                    hostname: "api.twitch.tv",
+                    port: 443,
+                    path: `/helix/streams?user_login=${name}`,
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Client-Id": this.config.clientId
+                    }
+                };
+                const req = https.request(options, res => {
+                    this.updateResponse(res);
+                    res.on("data", d => {
+                        const parsed = JSON.parse(d);
+                        if (parsed.data.length > 0) {
+                            resolve(parsed.data[0]);
+                        } else {
+                            resolve(null);
+                        }
+                    });
+                });
+                req.on("error", error => {
+                    reject(error);
+                });
+                req.end();
+            });
         });
     }
 
@@ -57,40 +103,6 @@ class TwitchApi {
         var diff = Date.now() - date.getTime();
 
         console.log("    >> Twitch API rate limits: " + this.currentRateRemaining + "/" + this.currentRateLimits + " (reset in " + (Number(diff) * -1) + " seconds[?])");
-    }
-
-    checkStream(user) {
-        return new Promise((resolve, reject) => {
-            this.getToken()
-                .then((token, tokenExpires) => {
-                    // uydate this here cause fuck request-promise
-                    this.token = token;
-                    this.tokenExpires = tokenExpires;
-
-                    const options = {
-                        method: 'GET',
-                        url: 'https://api.twitch.tv/helix/streams',
-                        qs: { user_login: user },
-                        headers: {
-                            'Client-ID': this.config.clientID,
-                            Authorization: 'Bearer ' + token
-                        }
-                    };
-
-                    request(options, function (error, res, body) {
-                        try {
-                            if (error) return reject(error);
-                            body = JSON.parse(body);
-                            resolve({ data: body.data[0], res });
-                        } catch (err) {
-                            reject(err);
-                        }
-                    });
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
     }
 
     getEmbed(stream) {
