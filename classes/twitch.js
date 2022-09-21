@@ -11,6 +11,8 @@ class TwitchApi {
         this.currentRateRemaining = 0;
         this.token = null;
         this.tokenExpires = null;
+
+        this.getToken();
     }
 
     resetToken() {
