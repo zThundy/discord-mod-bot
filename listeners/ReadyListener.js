@@ -35,7 +35,9 @@ class Listener {
     _twitchCheck(client) {
         for (var i in this.config.twitch.channelNames) {
             this.config.twitch.channelNames[i].uuid = this.cron.add(Number(this.config.twitch.checkEveryMinutes) * 60 * 1000, () => {
-                this.twitch.checkStream(this.config.twitch.channelNames[i].name)
+                var cacheIndex = i;
+
+                this.twitch.checkStream(this.config.twitch.channelNames[cacheIndex].name)
                     .then(r => {
                         this.twitch.updateResponse(r.res);
                         
@@ -45,13 +47,13 @@ class Listener {
                                     guild.channels.fetch(this.config.twitch.channelId)
                                         .then(channels => {
                                             // if the channel is not live, send the message
-                                            if (!this.config.twitch.channelNames[i].isLive) {
+                                            if (!this.config.twitch.channelNames[cacheIndex].isLive) {
                                                 // update the isLive status
-                                                this.config.twitch.channelNames[i].isLive = true;
+                                                this.config.twitch.channelNames[cacheIndex].isLive = true;
                                                 // create the embed
                                                 const embed = this.twitch.getEmbed(r.data);
                                                 // send the message
-                                                if (this.config.twitch.channelNames[i].tag) {
+                                                if (this.config.twitch.channelNames[cacheIndex].tag) {
                                                     channels.find(channel => channel.id === this.config.twitch.discordChannelId)
                                                         .send({
                                                             content: this.config.twitch.defaultMessage.format(r.data.user_name) + "<@&" + this.config.twitch.tagRole + ">",
@@ -70,7 +72,7 @@ class Listener {
                                 })
                                 .catch(console.error);
                         } else {
-                            this.config.twitch.channelNames[i].isLive = false;
+                            this.config.twitch.channelNames[cacheIndex].isLive = false;
                         }
                     })
                     .catch((err) => {
