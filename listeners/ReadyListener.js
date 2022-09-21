@@ -63,15 +63,12 @@ class Listener {
                                                 });
                                         }
                                     }
-                                })
-                                .catch(console.error);
-                            })
-                            .catch(console.error);
+                                }).catch(console.error);
+                            }).catch(console.error);
                         } else {
                             this.config.twitch.channelNames[cacheIndex].isLive = false;
                         }
-                    })
-                    .catch((err) => {
+                    }).catch((err) => {
                         console.log(err);
                         this.twitch.resetToken();
                     });
