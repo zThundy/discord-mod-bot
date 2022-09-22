@@ -18,11 +18,11 @@ class Cronjob {
             clearTimeout(timeout);
             timeout = setTimeout(cb, ms);
             this.cronjobs[uid] = { timeout, ms, fn };
-            fn();
+            fn(uid);
         }
         let timeout = setTimeout(cb, ms)
         this.cronjobs[uid] = { timeout, ms, fn };
-        if (firstFire) fn();
+        if (firstFire) fn(uid);
         return uid;
     }
 
