@@ -32,6 +32,14 @@ Then you will need to configure the main parameters with the corresponding IDs
     "guildId": "YOUR_GUILD_ID_HERE",
     "adminId": "YOUR_USER_ID_HERE",
 ```
+
+## Twitch integration
+If you want to run the twitch announcements module, then you will need to create a twitch application from this [link](https://dev.twitch.tv/console/apps) and then add the clientID and the clientSecret in the config fields:
+```json
+    "clientId": "YOUR_CLIENT_ID_HERE",
+    "clientSecret": "YOUR_CLIENT_SECRET_HERE",
+```
+
 Everything else is optional.
 
 ## License
