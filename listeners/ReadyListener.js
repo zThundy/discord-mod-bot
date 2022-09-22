@@ -32,7 +32,7 @@ class Listener {
     }
 
     _couterCheck(client) {
-        this.config.userCount.uuid = this.cron.add(Number(this.config.twitch.checkEveryMinutes) * 60 * 1000, (uid) => {
+        this.config.userCount.uuid = this.cron.add(Number(this.config.userCount.checkEveryMinutes) * 60 * 1000, (uid) => {
             this.counter.run();
         }, true);
     }

@@ -20,7 +20,7 @@ class Counter {
         this.cacheduserCount = this.guild.members.cache.filter(member => !member.user.bot).size;
         if (this.guild && this.cacheduserCount) {
             this.guild.channels.fetch(this.config.userCount.channelId).then(channel => {
-                channel.setName(this.config.userCount.message.format(this.cacheduserCount));
+                channel.setName(this.config.userCount.channelName.format(this.cacheduserCount));
             });
         }
     }
