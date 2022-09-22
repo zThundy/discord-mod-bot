@@ -19,8 +19,6 @@ class Listener {
         client.guilds.cache.forEach(guild => {
             if (guild.id !== this.config.guildId) {
                 guild.leave();
-            } else {
-                this.counter.update(guild);
             }
         });
 
@@ -29,7 +27,14 @@ class Listener {
             url: this.config.status.url
         });
 
-        this._twitchCheck(client);
+        if (this.config.twitch.enabled) this._twitchCheck(client);
+        if (this.config.userCount.enabled) this._couterCheck(client);
+    }
+
+    _couterCheck(client) {
+        this.config.userCount.uuid = this.cron.add(Number(this.config.twitch.checkEveryMinutes) * 60 * 1000, (uid) => {
+            this.counter.run();
+        }, true);
     }
 
     _twitchCheck(client) {

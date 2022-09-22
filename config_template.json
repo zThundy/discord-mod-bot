@@ -5,6 +5,7 @@
     "adminId": "YOUR_USER_ID_HERE",
     "userCount": {
         "enabled": true,
+        "checkEveryMinutes": 30,
         "channelId": "CHANNEL_ID_HERE",
         "channelName": "💚 Users count: {0}"
     },

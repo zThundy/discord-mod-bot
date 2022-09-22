@@ -1,7 +1,6 @@
 class Listener {
     constructor(config, client) {
         this.config = config;
-        this.counter = client.modules.get("userCount");
         this.reactions = client.modules.get("userReactions");
         this.wordFilter = client.modules.get("wordFilter");
     }
@@ -23,7 +22,6 @@ class Listener {
     messageCreate(client, message) {
         // check if the message is from the configured guild
         if (message.guild.id !== this.config.guildId) return;
-        this.counter.update(message.guild);
         // check if the word filter is enabled in the config file
         if (this.config.wordsFilter.enabled) if (!this.wordFilter.checkMessage(message)) return;
         
@@ -92,13 +90,11 @@ class Listener {
     messageDelete(client, message) {
         // check if the message is from the configured guild
         if (message.guild.id !== this.config.guildId) return;
-        this.counter.update(message.guild);
     }
 
     messageUpdate(client, oldMessage, newMessage) {
         // check if the message is from the configured guild
         if (oldMessage.guild.id !== this.config.guildId) return;
-        this.counter.update(oldMessage.guild);
     }
 }
 
