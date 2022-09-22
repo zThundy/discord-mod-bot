@@ -23,39 +23,44 @@ class TwitchApi {
     // function to get the oauth token using https module
     getToken() {
         return new Promise((resolve, reject) => {
-            if (this.token && this.tokenExpires > Date.now()) {
-                console.log("    >> Using cached token");
-                resolve(this.token);
-            } else {
-                console.log("    >> Getting new token");
-                const data = JSON.stringify({
-                    client_id: this.config.clientId,
-                    client_secret: this.config.clientSecret,
-                    grant_type: "client_credentials"
-                });
-                const options = {
-                    hostname: "id.twitch.tv",
-                    port: 443,
-                    path: "/oauth2/token",
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Content-Length": data.length
-                    }
-                };
-                const req = https.request(options, res => {
-                    res.on("data", d => {
-                        const parsed = JSON.parse(d);
-                        this.token = parsed.access_token;
-                        this.tokenExpires = Date.now() + (parsed.expires_in * 1000);
-                        resolve(this.token);
+            try {
+                if (this.token && this.tokenExpires > Date.now()) {
+                    console.log("    >> Using cached token");
+                    resolve(this.token);
+                } else {
+                    console.log("    >> Getting new token");
+                    const data = JSON.stringify({
+                        client_id: this.config.clientId,
+                        client_secret: this.config.clientSecret,
+                        grant_type: "client_credentials"
                     });
-                });
-                req.on("error", error => {
-                    reject(error);
-                });
-                req.write(data);
-                req.end();
+                    const options = {
+                        hostname: "id.twitch.tv",
+                        port: 443,
+                        path: "/oauth2/token",
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Content-Length": data.length
+                        }
+                    };
+                    const req = https.request(options, res => {
+                        res.on("data", d => {
+                            const parsed = JSON.parse(d);
+                            this.token = parsed.access_token;
+                            this.tokenExpires = Date.now() + (parsed.expires_in * 1000);
+                            resolve(this.token);
+                        });
+                    });
+                    req.on("error", error => {
+                        reject(error);
+                    });
+                    req.write(data);
+                    req.end();
+                }
+            } catch(e) {
+                this.resetToken();
+                reject(e);
             }
         });
     }
