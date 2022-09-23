@@ -285,8 +285,7 @@ class Logger {
     }
 
     channelUpdate(client, oldChannel, newChannel) {
-        if (oldChannel.name === newChannel.name) return;
-        if (oldChannel.type === newChannel.type) return;
+        if (oldChannel.name === newChannel.name && oldChannel.type === newChannel.type) return;
 
         const embed = new Discord.MessageEmbed()
             .setTitle(`Channel ***${newChannel.name}*** got updated`)
