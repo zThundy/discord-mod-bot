@@ -1,3 +1,5 @@
+const { Permissions } = require('discord.js');
+
 class Listener {
     constructor(config, client) {
         this.config = config;
@@ -26,9 +28,9 @@ class Listener {
         if (this.config.wordsFilter.enabled) if (!this.wordFilter.checkMessage(message)) return;
         
         // check if the sent message is a user joining the server, if so, add the role
-        if (message.type === "GUILD_MEMBER_JOIN") {
+        if (message.type === "GUILD_MEMBER_JOIN" && this.config.roleAssigner.enabled) {
             // find specific role and add to user
-            const role = message.guild.roles.cache.find(role => role.id === this.config.userRole);
+            const role = message.guild.roles.cache.find(role => role.id === this.config.roleAssiger.userRole);
             // assign that role to the user
             message.member.roles.add(role);
         }
@@ -36,7 +38,7 @@ class Listener {
         // check if the message is beeing sent from a bot
         if (message.author.bot) return;
         // check if the message is sent from someone that is not an admin
-        if (message.author.id !== this.config.adminId) return;
+        if (message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
 
         if (message.mentions.users.has(client.user.id)) {
             if (message.content.includes("reaction")) {
