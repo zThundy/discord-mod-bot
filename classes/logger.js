@@ -254,6 +254,36 @@ class Logger {
     }
 
     voiceStateUpdate(client, oldState, newState) {
+        if (oldState.channel === null && newState.channel !== null) {
+            const embed = new Discord.MessageEmbed()
+                .setTitle(`User ***${newState.member.displayName}*** joined voice channel`)
+                .setAuthor({ name: newState.member.displayName, iconURL: newState.member.displayAvatarURL() })
+                .setColor("#00ff00")
+                .addFields(
+                    { name: "Username", value: "```" + newState.member.displayName + "```" },
+                    { name: "Channel", value: "```" + newState.channel.name + "```" },
+                    { name: "ID", value: "```" + newState.member.id + "```" },
+                )
+                .setTimestamp()
+                .setFooter({ text: "Made with ❤️ by zThundy" });
+
+            return embed;
+        } else if (oldState.channel !== null && newState.channel === null) {
+            const embed = new Discord.MessageEmbed()
+                .setTitle(`User ***${oldState.member.displayName}*** left voice channel`)
+                .setAuthor({ name: oldState.member.displayName, iconURL: oldState.member.displayAvatarURL() })
+                .setColor("#ff0000")
+                .addFields(
+                    { name: "Username", value: "```" + oldState.member.displayName + "```" },
+                    { name: "Channel", value: "```" + oldState.channel.name + "```" },
+                    { name: "ID", value: "```" + oldState.member.id + "```" },
+                )
+                .setTimestamp()
+                .setFooter({ text: "Made with ❤️ by zThundy" });
+
+            return embed;
+        }
+
         const embed = new Discord.MessageEmbed()
             .setTitle(`User ***${newState.member.displayName}*** voicestate changed`)
             .setAuthor({ name: newState.member.displayName, iconURL: newState.member.displayAvatarURL() })
