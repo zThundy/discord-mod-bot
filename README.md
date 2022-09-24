@@ -9,8 +9,6 @@
   </a>
 </p>
 
-This open source project is a node package made to have a personal discord bot to play music from youtube and spotify.
-
 ## Installation
 To install everything you need, you'll have to run the command
 
@@ -19,28 +17,8 @@ npm install
 ```
 
 ## Configuration
-To configure the bot, you can change the `config_template.js` or create a clone of that file called `config.js`.
 
-## Run bot
-To run the bot you will need to add your discord bot [token](https://discord.com/developers/applications) and add it to the `config.js` file as shown here:
-```json
-    "token": "YOUR_TOKEN_HERE",
-```
-Then you will need to configure the main parameters with the corresponding IDs
-```json
-    "userRole": "DEFAULT_ROLE_ID_HERE",
-    "guildId": "YOUR_GUILD_ID_HERE",
-    "adminId": "YOUR_USER_ID_HERE",
-```
-
-## Twitch integration
-If you want to run the twitch announcements module, then you will need to create a twitch application from this [link](https://dev.twitch.tv/console/apps) and then add the clientID and the clientSecret in the config fields:
-```json
-    "clientId": "YOUR_CLIENT_ID_HERE",
-    "clientSecret": "YOUR_CLIENT_SECRET_HERE",
-```
-
-Everything else is optional.
+Check the [**Wiki**](https://github.com/zThundy/discord-mod-bot/wiki)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
