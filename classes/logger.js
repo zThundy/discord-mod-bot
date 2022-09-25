@@ -14,7 +14,7 @@ class Logger {
 
     reloadChannel() {
         if (this.channel.id !== this.config.logs.channelId) {
-            console.log("    >> Reloading channel for logger");
+            console.log("       >> Reloading channel for logger");
             this.guild.channels.fetch(this.config.logs.channelId)
                 .then(channel => {  
                     this.channel = channel;
@@ -34,10 +34,7 @@ class Logger {
 
         // send the embed
         var message = this[event](...args);
-        console.log("got message: " + event + message);
         if (!message) return;
-        console.log("got message: " + event);
-        console.log("should be sending log message in " + this.channel.id)
         this.channel.send({ embeds: [message] });
     }
 
