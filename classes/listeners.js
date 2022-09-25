@@ -9,35 +9,35 @@ const VoiceStateUpdate = require("../listeners/VoiceListener.js");
 const ChannelListener = require("../listeners/ChannelListener.js");
 
 const cLoader = require("../classes/configLoader.js");
-const config = new cLoader().getConfig();
+const config = new cLoader().get();
 const Logger = require("../classes/logger.js");
 
 class Listeners {
     constructor(client) {
         // const guild = this.client.guilds.cache.get(config.guildId);
         this.listeners = {};
-        this.register("messageCreate", new MessageListener(config, client));
-        this.register("messageDelete", new MessageListener(config, client));
-        this.register("messageUpdate", new MessageListener(config, client));
-        this.register("ready", new ReadyListener(config, client));
-        this.register("guildMemberAdd", new UserListener(config, client));
-        this.register("guildMemberRemove", new UserListener(config, client));
-        this.register("guildMemberUpdate", new UserListener(config, client));
-        this.register("interactionCreate", new InteractionListener(config, client));
-        this.register("guildCreate", new GuildListener(config, client));
-        this.register("guildDelete", new GuildListener(config, client));
-        this.register("guildUpdate", new GuildListener(config, client));
-        this.register("messageReactionAdd", new MessageReactionListener(config, client));
-        this.register("messageReactionRemove", new MessageReactionListener(config, client));
-        this.register("roleCreate", new RolesListener(config, client));
-        this.register("roleDelete", new RolesListener(config, client));
-        this.register("roleUpdate", new RolesListener(config, client));
-        this.register("voiceStateUpdate", new VoiceStateUpdate(config, client));
-        this.register("channelCreate", new ChannelListener(config, client));
-        this.register("channelDelete", new ChannelListener(config, client));
-        this.register("channelUpdate", new ChannelListener(config, client));
+        this.register("messageCreate", new MessageListener(client));
+        this.register("messageDelete", new MessageListener(client));
+        this.register("messageUpdate", new MessageListener(client));
+        this.register("ready", new ReadyListener(client));
+        this.register("guildMemberAdd", new UserListener(client));
+        this.register("guildMemberRemove", new UserListener(client));
+        this.register("guildMemberUpdate", new UserListener(client));
+        this.register("interactionCreate", new InteractionListener(client));
+        this.register("guildCreate", new GuildListener(client));
+        this.register("guildDelete", new GuildListener(client));
+        this.register("guildUpdate", new GuildListener(client));
+        this.register("messageReactionAdd", new MessageReactionListener(client));
+        this.register("messageReactionRemove", new MessageReactionListener(client));
+        this.register("roleCreate", new RolesListener(client));
+        this.register("roleDelete", new RolesListener(client));
+        this.register("roleUpdate", new RolesListener(client));
+        this.register("voiceStateUpdate", new VoiceStateUpdate(client));
+        this.register("channelCreate", new ChannelListener(client));
+        this.register("channelDelete", new ChannelListener(client));
+        this.register("channelUpdate", new ChannelListener(client));
 
-        this.logger = new Logger(config, client);
+        this.logger = new Logger(client);
     }
 
     register(event, listener) {

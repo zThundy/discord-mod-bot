@@ -1,5 +1,7 @@
 class Listener {
-    constructor(config) {
+    constructor(client) {
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
     }
 
     run(event, oldState, newState) {

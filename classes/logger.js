@@ -1,23 +1,43 @@
 const Discord = require("discord.js");
 
 class Logger {
-    constructor(config, client) {
-        this.config = config;
-        this.guild = client.guilds.cache.get(config.guildId)
-        this.guild.channels.fetch(config.logs.channelId)
+    constructor(client) {
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
+        this.guild = client.guilds.cache.get(this.config.guildId)
+        this.guild.channels.fetch(this.config.logs.channelId)
             .then(channel => {  
                 this.channel = channel;
             });
         this.userId = client.user.id;
     }
 
+    reloadChannel() {
+        if (this.channel.id !== this.config.logs.channelId) {
+            console.log("    >> Reloading channel for logger");
+            this.guild.channels.fetch(this.config.logs.channelId)
+                .then(channel => {  
+                    this.channel = channel;
+                });
+        }
+    }
+
     run(event, ...args) {
+        // update config every call cause YES
+        this.config = this.cLoader.get();
+        // reload channel if needed
+        this.reloadChannel();
+        // check if the event is enabled
         console.log("    >> Calling logger for: " + event);
         if (!this.config.logs.enabled) return;
         if (!this[event]) return;
 
+        // send the embed
         var message = this[event](...args);
+        console.log("got message: " + event + message);
         if (!message) return;
+        console.log("got message: " + event);
+        console.log("should be sending log message in " + this.channel.id)
         this.channel.send({ embeds: [message] });
     }
 

@@ -1,6 +1,7 @@
 class Listener {
-    constructor(config, client) {
-        this.config = config;
+    constructor(client) {
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
         this.reactions = client.modules.get("userReactions");
     }
 

@@ -8,8 +8,9 @@ if (!String.prototype.format) {
 }
 
 class Listener {
-    constructor(config, client) {
-        this.config = config;
+    constructor(client) {
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
         this.counter = client.modules.get("userCount");
         this.cron = client.modules.get("cron");
         this.twitch = client.modules.get("twitch");

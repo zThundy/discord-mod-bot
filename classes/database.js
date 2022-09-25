@@ -5,7 +5,7 @@ class SQL {
         this.config = config;
         this.db = null;
         this._init();
-        console.log("Database loaded");
+        console.log("> Database loaded");
     }
 
     _init() {

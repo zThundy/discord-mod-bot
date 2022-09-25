@@ -1,7 +1,5 @@
 const cLoader = require("./classes/configLoader.js");
-const config = new cLoader().getConfig();
-const db = require("./classes/database.js");
-const sql = new db(config);
+const config = new cLoader().get();
 
 const discord = require("discord.js");
 
@@ -30,11 +28,15 @@ const client = new discord.Client({
 // autenticate the discord client
 client.login(config.token)
     .then(() => {
+        const db = require("./classes/database.js");
+        const sql = new db(config);
+
         client.config = config;
         client.db = sql;
-        
+
         // map with all modules
         client.modules = new Map();
+        client.modules.set("config", new cLoader(client));
         const Reactions = require("./classes/userReactions.js")
         client.modules.set("userReactions", new Reactions(config, client));
         const ChannelCounter = require("./classes/userCount.js");
