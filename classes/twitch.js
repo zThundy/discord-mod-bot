@@ -3,7 +3,9 @@ const { MessageAttachment } = require("discord.js");
 
 class TwitchApi {
     constructor(config, client) {
-        this.config = config.twitch;
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get().twitch;
+        // this.config = config.twitch;
         // for now i don't need this, maybe implement some check later?
         this.currentRateLimits = 0;
         this.currentRateLimitsReset = 0;

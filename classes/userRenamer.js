@@ -9,7 +9,9 @@ if (!String.prototype.format) {
 
 class Renamer {
     constructor(config, client) {
-        this.config = config;
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
+        // this.config = config;
         // client.db.getNicknames()
         //     .then(nicks => {    
         //         this.nicks = nicks;

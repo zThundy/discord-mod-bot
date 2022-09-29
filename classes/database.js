@@ -1,8 +1,10 @@
 const sqlite = require('sqlite3');
 
 class SQL {
-    constructor(config) {
-        this.config = config;
+    constructor(config, client) {
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
+        // this.config = config;
         this.db = null;
         this._init();
         console.log("> Database loaded");

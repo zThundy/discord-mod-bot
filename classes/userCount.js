@@ -9,7 +9,9 @@ if (!String.prototype.format) {
 
 class Counter {
     constructor(config, client) {
-        this.config = config;
+        this.cLoader = client.modules.get("config");
+        this.config = this.cLoader.get();
+        // this.config = config;
         // TODO: add Db connection
         this.guild = client.guilds.cache.get(this.config.guildId);
         this.cacheduserCount = 0;
