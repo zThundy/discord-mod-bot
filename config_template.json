@@ -69,6 +69,11 @@
     "database": {
         "filename": "database"
     },
+    "polls": {
+        "enabled": true,
+        "channelId": "YOUR_POLLS_CHANNEL_ID_HERE",
+        "emoji": "📊"
+    },
     "status": {
         "message": "YOUR_STATUS_MESSAGE_HERE",
         "type": "YOUR_STATUS_TYPE_HERE",

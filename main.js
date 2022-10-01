@@ -31,7 +31,6 @@ client.login(config.token)
         const db = require("./classes/database.js");
         const sql = new db(config);
 
-        client.config = config;
         client.db = sql;
 
         // map with all modules
@@ -49,6 +48,8 @@ client.login(config.token)
         client.modules.set("cron", new Cron(config, client));
         const Twitch = require("./classes/twitch.js");
         client.modules.set("twitch", new Twitch(config, client));
+        const Poll = require("./classes/poll.js");
+        client.modules.set("poll", new Poll(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);
