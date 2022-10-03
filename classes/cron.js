@@ -1,10 +1,10 @@
 class Cronjob {
-    constructor(config, client) {
+    constructor() {
         this.cronjobs = {}
     }
 
     // function that creates a uuid
-    uuid() {
+    _uuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -12,34 +12,55 @@ class Cronjob {
         });
     }
 
+    // function that creates and start a cronjob
     add(ms, fn, firstFire = false) {
-        const uid = this.uuid();
+        /**
+         * @param {number} ms - time in milliseconds
+         * @param {function} fn - function to execute
+         * @param {boolean} firstFire - if true, the function will be executed immediately
+         */
+        const uid = this._uuid();
         const cb = () => {
             clearTimeout(timeout);
             timeout = setTimeout(cb, ms);
-            this.cronjobs[uid] = { timeout, ms, fn };
+            this.cronjobs[uid] = { timeout, ms, fn, firstFire };
             fn(uid);
         }
         let timeout = setTimeout(cb, ms)
-        this.cronjobs[uid] = { timeout, ms, fn };
+        this.cronjobs[uid] = { timeout, ms, fn, firstFire };
         if (firstFire) fn(uid);
         return uid;
     }
 
-    stop() {
-        for (const uid in this.cronjobs) {
-            clearTimeout(this.cronjobs[uid]);
-        }
-    }
-
     start(uid) {
-        const newuid = this.add(this.cronjobs[uid].ms, this.cronjobs[uid].fn);
+        /**
+         * @param {string} uid - uuid of the old cronjob
+         */
+        const newuid = this.add(this.cronjobs[uid].ms, this.cronjobs[uid].fn, this.cronjobs[uid].firstFire);
         this.cronjobs[uid] = this.cronjobs[newuid];
         this.removeCronjob(uid);
         return newuid;
     }
 
+    stopAll() {
+        for (const uid in this.cronjobs) {
+            clearTimeout(this.cronjobs[uid]);
+        }
+    }
+
+    stop(uid) {
+        /**
+         * @param {string} uid - uuid of the cronjob
+         */
+        if (!this.cronjobs[uid]) return console.error("Can't stop CronJob with uid " + uid + ": Cronjob not found");
+        clearTimeout(this.cronjobs[uid]);
+    }
+
     removeCronjob(uid) {
+        /**
+         * @param {string} uid - uuid of the cronjob
+         */
+        if (!this.cronjobs[uid]) return console.error("Can't remove CronJob with uid " + uid + ": Cronjob not found");
         clearTimeout(this.cronjobs[uid]);
         delete this.cronjobs[uid];
     }
