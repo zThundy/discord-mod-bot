@@ -30,6 +30,12 @@
         "clientId": "YOUR_CLIENT_ID_HERE",
         "clientSecret": "YOUR_CLIENT_SECRET_HERE"
     },
+    "vrchat": {
+        "enabled": true,
+        "apiKey": "JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26",
+        "username": "YOUR_VRC_USERNAME_HERE",
+        "password": "YOUR_VRC_PASSWORD_HERE"
+    },
     "userReactions": {
         "enabled": true
     },

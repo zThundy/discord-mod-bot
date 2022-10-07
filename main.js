@@ -50,6 +50,8 @@ client.login(config.token)
         client.modules.set("twitch", new Twitch(config, client));
         const Poll = require("./classes/poll.js");
         client.modules.set("poll", new Poll(config, client));
+        const VRChat = require("./classes/vrchat.js");
+        client.modules.set("vrchat", new VRChat(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);
