@@ -36,6 +36,14 @@
         "username": "YOUR_VRC_USERNAME_HERE",
         "password": "YOUR_VRC_PASSWORD_HERE"
     },
+    "minecraft": {
+        "enabled": true,
+        "role": "YOUR_ROLE_ID_HERE",
+        "verifyChannel": "YOUR_CHANNEL_ID_HERE",
+        "host": "YOUR_MINECRAFT_SERVER_IP_HERE",
+        "port": "YOUR_MINECRAFT_RCON_SERVER_PORT_HERE",
+        "password": "YOUR_MINECRAFT_RCON_SERVER_PASSWORD_HERE"
+    },
     "userReactions": {
         "enabled": true
     },

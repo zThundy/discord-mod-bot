@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@scriptserver/core": "^2.0.4",
     "discord.js": "^13.8.1",
     "sqlite3": "^5.0.8",
     "vrchat": "^1.7.4"
