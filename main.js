@@ -40,8 +40,6 @@ client.login(config.token)
         client.modules.set("userReactions", new Reactions(config, client));
         const ChannelCounter = require("./classes/userCount.js");
         client.modules.set("userCount", new ChannelCounter(config, client));
-        const UserRenamer = require("./classes/userRenamer.js");
-        client.modules.set("userRenamer", new UserRenamer(config, client));
         const WordFilter = require("./classes/wordFilter.js");
         client.modules.set("wordFilter", new WordFilter(config, client));
         const Cron = require("./classes/cron.js");

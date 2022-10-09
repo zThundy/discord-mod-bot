@@ -50,12 +50,6 @@
     "wordsFilter": {
         "enabled": true
     },
-    "nicknames": {
-        "enabled": true,
-        "roles": {
-            "ROLE_ID_HERE": "PREFIX_HERE"
-        }
-    },
     "logs": {
         "enabled": true,
         "channelId": "CHANNEL_ID_HERE",
