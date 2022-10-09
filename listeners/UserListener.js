@@ -48,12 +48,12 @@ class Listener {
                     if (m.content.match(/^[a-zA-Z0-9_]{3,16}$/)) {
                         // send a message to the minecraft channel
                         m.reply(`New minecraft username submitted by <@${newUser.id}> - ${m.content}`);
-                        setTimeout(() => this.channel.bulkDelete(10), 5000);
+                        setTimeout(() => this.channel.bulkDelete(10), 10000);
                         this.minecraft.addPlayer({ userId: newUser.id, guildId: this.config.guildId, minecraftName: m.content });
                     } else {
                         // send a message to the user
                         m.reply("Your username is invalid, please try again");
-                        setTimeout(() => this.channel.bulkDelete(10), 5000);
+                        setTimeout(() => this.channel.bulkDelete(10), 10000);
                     }
                 });
             });
