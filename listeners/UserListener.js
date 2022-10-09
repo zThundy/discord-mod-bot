@@ -39,7 +39,8 @@ class Listener {
             this.channel.send({ content: `<@${newUser.id}> please send your minecraft username in this channel\n\nNote: **If your username is already whitelisted you can either ignore this message or send the new one to update it.**` }).then(mainMessage => {
                 // listen for the reply of the user
                 const filter = m => m.author.id === newUser.id;
-                const collector = this.channel.createMessageCollector(filter, { time: 60000 });
+                // 10 mins to reply
+                const collector = this.channel.createMessageCollector(filter, { time: 600000 });
                 collector.on("collect", async m => {
                     collector.stop();
                         
