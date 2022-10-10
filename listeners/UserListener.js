@@ -36,13 +36,13 @@ class Listener {
         // check if the role added is the one in the config file
         if (newUser.roles.cache.find(role => role.id === this.config.minecraft.role)) {
             // send a message in the channel id in the config tagging the user
-            this.channel.send({ content: `<@${newUser.id}> please send your minecraft username in this channel\n\nNote: **If your username is already whitelisted you can either ignore this message or send the new one to update it.**` }).then(mainMessage => {
+            this.channel.send({ content: `<@${newUser.id}> please send your minecraft username in this channel\n\nNote: **If your username is already whitelisted you can either ignore this message or send the new one to update it.**\n\nThis message will expire in ***10 minutes***` }).then(mainMessage => {
                 // listen for the reply of the user
                 const filter = m => m.author.id === newUser.id;
                 // 10 mins to reply
                 const collector = this.channel.createMessageCollector(filter, { time: 600000 });
                 collector.on("collect", async m => {
-                    collector.stop();
+                    if (m.author.id !== newUser.id) return;
                         
                     // check if the message is a valid minecraft username
                     if (m.content.match(/^[a-zA-Z0-9_]{3,16}$/)) {
@@ -50,6 +50,7 @@ class Listener {
                         m.reply(`New minecraft username submitted by <@${newUser.id}> - ${m.content}`);
                         setTimeout(() => this.channel.bulkDelete(10), 10000);
                         this.minecraft.addPlayer({ userId: newUser.id, guildId: this.config.guildId, minecraftName: m.content });
+                        collector.stop();
                     } else {
                         // send a message to the user
                         m.reply("Your username is invalid, please try again");

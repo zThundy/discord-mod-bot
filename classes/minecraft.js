@@ -45,6 +45,7 @@ class MinecraftHandler {
         this.connection.connect();
         this.db.getMinecraftUser({ userId: data.userId, guildId: data.guildId }).then((user) => {
             this.db.removeMinecraftUser({ userId: data.userId, guildId: data.guildId });
+            if (!user) return;
             this.sendCommand(`whitelist remove ${user.minecraftName}`);
         });
     }
