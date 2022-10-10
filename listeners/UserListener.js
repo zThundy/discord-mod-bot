@@ -37,24 +37,35 @@ class Listener {
         if (newUser.roles.cache.find(role => role.id === this.config.minecraft.role)) {
             // send a message in the channel id in the config tagging the user
             this.channel.send({ content: `<@${newUser.id}> please send your minecraft username in this channel\n\nNote: **If your username is already whitelisted you can either ignore this message or send the new one to update it.**\n\nThis message will expire in ***10 minutes***` }).then(mainMessage => {
+                const _messages = [];
+                _messages.push(mainMessage);
                 // listen for the reply of the user
                 const filter = m => m.author.id === newUser.id;
                 // 10 mins to reply
                 const collector = this.channel.createMessageCollector(filter, { time: 600000 });
                 collector.on("collect", async m => {
                     if (m.author.id !== newUser.id) return;
+                    _messages.push(m);
                         
                     // check if the message is a valid minecraft username
                     if (m.content.match(/^[a-zA-Z0-9_]{3,16}$/)) {
                         // send a message to the minecraft channel
-                        m.reply(`New minecraft username submitted by <@${newUser.id}> - ${m.content}`);
-                        setTimeout(() => this.channel.bulkDelete(10), 10000);
-                        this.minecraft.addPlayer({ userId: newUser.id, guildId: this.config.guildId, minecraftName: m.content });
-                        collector.stop();
+                        m.reply(`New minecraft username submitted by <@${newUser.id}> - ${m.content}`)
+                            .then(message => {
+                                _messages.push(message);
+                                // delete all messages in the _messages array
+                                setTimeout(() => { for (let i = 0; i < _messages.length; i++) _messages[i].delete(); }, 10000);
+                                // add player to whitelist and stop collector
+                                this.minecraft.addPlayer({ userId: newUser.id, guildId: this.config.guildId, minecraftName: m.content });
+                                collector.stop();
+                            });
                     } else {
                         // send a message to the user
-                        m.reply("Your username is invalid, please try again");
-                        setTimeout(() => this.channel.bulkDelete(10), 10000);
+                        m.reply(`<@${newUser.id}> Your username is invalid, please send the username again!`)
+                            .then(message => {
+                                _messages.push(message);
+                            });
+                        // setTimeout(() => this.channel.bulkDelete(10), 10000);
                     }
                 });
             });

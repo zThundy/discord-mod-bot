@@ -47,6 +47,7 @@ class MinecraftHandler {
             this.db.removeMinecraftUser({ userId: data.userId, guildId: data.guildId });
             if (!user) return;
             this.sendCommand(`whitelist remove ${user.minecraftName}`);
+            this.sendCommand(`kick ${user.minecraftName} You have been removed from the whitelist`);
         });
     }
 }
