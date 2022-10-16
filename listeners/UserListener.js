@@ -34,7 +34,7 @@ class Listener {
 
     guildMemberUpdate(client, oldUser, newUser) {
         // check if the role added is the one in the config file
-        if (newUser.roles.cache.find(role => role.id === this.config.minecraft.role)) {
+        if (!oldUser.roles.cache.find(role => role.id === this.config.minecraft.role) && newUser.roles.cache.find(role => role.id === this.config.minecraft.role)) {
             // send a message in the channel id in the config tagging the user
             this.channel.send({ content: `<@${newUser.id}> please send your minecraft username in this channel\n\nNote: **If your username is already whitelisted you can either ignore this message or send the new one to update it.**\n\nThis message will expire in ***10 minutes***` }).then(mainMessage => {
                 const _messages = [];
