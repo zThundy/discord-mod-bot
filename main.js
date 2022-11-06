@@ -46,6 +46,8 @@ client.login(config.token)
         client.modules.set("cron", new Cron(config, client));
         const Twitch = require("./classes/twitch.js");
         client.modules.set("twitch", new Twitch(config, client));
+        const Counter = require("./classes/counter.js");
+        client.modules.set("counter", new Counter(config, client));
         // const VRChat = require("./classes/vrchat.js");
         // client.modules.set("vrchat", new VRChat(config, client));
         const Minecraft = require("./classes/minecraft.js");

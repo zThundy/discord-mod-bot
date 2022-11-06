@@ -6,6 +6,7 @@ class Listener {
         this.config = this.cLoader.get();
         this.reactions = client.modules.get("userReactions");
         this.wordFilter = client.modules.get("wordFilter");
+        this.counter = client.modules.get("counter");
     }
 
     run(event, ...args) {
@@ -27,6 +28,8 @@ class Listener {
         if (message.guild.id !== this.config.guildId) return;
         // check if the word filter is enabled in the config file
         if (this.config.wordsFilter.enabled) if (!this.wordFilter.checkMessage(message)) return;
+        // check if the message is a counter
+        this.counter.checkCount(message);
 
         // check if the message is beeing sent from a bot
         if (message.author.bot) return;

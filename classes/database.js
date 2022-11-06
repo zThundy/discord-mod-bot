@@ -12,6 +12,7 @@ class SQL {
         this.db = new sqlite.Database(`./data/${this.config.database.filename}.db`);
         this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT, reactions TEXT)");
         this.db.run("CREATE TABLE IF NOT EXISTS minecraft (guildId TEXT, userId TEXT, minecraftName TEXT)");
+        this.db.run("CREATE TABLE IF NOT EXISTS counter (guildId TEXT, counter INTEGER)");
         // this.db.run("CREATE TABLE IF NOT EXISTS nicks (guildId TEXT, userId TEXT, nick TEXT)");
     }
 
@@ -67,6 +68,40 @@ class SQL {
          */
         return new Promise((resolve, reject) => {
             this.db.get(`SELECT * FROM minecraft WHERE guildId = ? AND userId = ?`, [data.guildId, data.userId], (err, row) => {
+                if (err) resolve(null);
+                resolve(row);
+            });
+        });
+    }
+
+    updateCounter(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {INTEGER} data.counter
+         */
+        this.getCounter({ guildId: data.guildId })
+            .then(row => {
+                if (row) {
+                    this.db.run(`UPDATE counter SET counter = ? WHERE guildId = ?`, [data.counter, data.guildId]);
+                } else {
+                    this.db.run(`INSERT INTO counter (guildId, counter) VALUES (?, ?)`, [data.guildId, data.counter]);
+                }
+            });
+    }
+
+    removeCounter(data) {
+        /**
+         * @param {STRING} data.guildId
+        */
+        this.db.run(`DELETE FROM counter WHERE guildId = ?`, [data.guildId]);
+    }
+
+    getCounter(data) {
+        /**
+         * @param {STRING} data.guildId
+         */
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM counter WHERE guildId = ?`, [data.guildId], (err, row) => {
                 if (err) resolve(null);
                 resolve(row);
             });

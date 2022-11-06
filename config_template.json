@@ -30,6 +30,10 @@
         "clientId": "YOUR_CLIENT_ID_HERE",
         "clientSecret": "YOUR_CLIENT_SECRET_HERE"
     },
+    "counter": {
+        "enabled": true,
+        "channelId": "YOUR_CHANNEL_ID_HERE"
+    },
     "vrchat": {
         "enabled": true,
         "apiKey": "JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26",
