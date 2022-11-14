@@ -82,6 +82,7 @@
         "filename": "database"
     },
     "status": {
+        "refreshEveryMinutes": 60,
         "message": "YOUR_STATUS_MESSAGE_HERE",
         "type": "YOUR_STATUS_TYPE_HERE",
         "url": "YOUR_STATUS_URL_HERE"

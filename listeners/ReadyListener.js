@@ -17,16 +17,20 @@ class Listener {
     }
 
     run(event, client) {
+        this.client = client;
+
         client.guilds.cache.forEach(guild => {
             if (guild.id !== this.config.guildId) {
                 guild.leave();
             }
         });
 
-        client.user.setActivity(this.config.status.message, {
-            type: this.config.status.type,
-            url: this.config.status.url
-        });
+        this.cron.add(Number(this.config.status.refreshEveryMinutes) * 60 * 1000, (uid) => {
+            client.user.setActivity(this.config.status.message, {
+                type: this.config.status.type,
+                url: this.config.status.url
+            });
+        }, true);
 
         if (this.config.twitch.enabled) this._twitchCheck(client);
         if (this.config.userCount.enabled) this._couterCheck(client);
