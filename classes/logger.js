@@ -106,6 +106,9 @@ class Logger {
         if (newMessage.content.length === 0) _newMessageValue = "```Unknown```"
         if (oldMessage.cleanContent.length === 0) _oldMessageCleanContent = "```Unknown```"
         if (newMessage.cleanContent.length === 0) _newMessageCleanContent = "```Unknown```"
+        
+        if (oldMessage.content === newMessage.content) return;
+        if (oldMessage.cleanContent === newMessage.cleanContent) return;
 
         const embed = new Discord.MessageEmbed()
             .setTitle(`Message edited by ***${newMessage.author.username}*** in ***${newMessage.channel.name}***`)
