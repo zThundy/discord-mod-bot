@@ -41,6 +41,8 @@ class Listener {
                 this._reactionsCommand(message);
             } else if (message.content.includes("logger")) {
                 this._loggerCommand(message);
+            } else if (message.content.includes("online")) {
+                this._onlineHoursCommand(message);
             }
         }
     }
@@ -123,6 +125,12 @@ class Listener {
                     });
             }
         }
+    }
+
+    _onlineHoursCommand(message) {
+        // get the number of hours the user has been online in a voice channel
+        const hours = this.hoursCounter.getHours(message.author.id);
+        message.reply(`You have been online for **${hours}** hours.`);
     }
 }
 

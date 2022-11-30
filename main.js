@@ -52,6 +52,8 @@ client.login(config.token)
         // client.modules.set("vrchat", new VRChat(config, client));
         const Minecraft = require("./classes/minecraft.js");
         client.modules.set("minecraft", new Minecraft(config, client));
+        const HoursCounter = require("./classes/hourCounter.js");
+        client.modules.set("hourCounter", new HoursCounter(config, client));
 
         const Listener = require("./classes/listeners.js");
         const listeners = new Listener(client);

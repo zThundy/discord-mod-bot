@@ -13,6 +13,7 @@ class SQL {
         this.db.run("CREATE TABLE IF NOT EXISTS reactions (guildId TEXT, channelId TEXT, messageId TEXT, reactions TEXT)");
         this.db.run("CREATE TABLE IF NOT EXISTS minecraft (guildId TEXT, userId TEXT, minecraftName TEXT)");
         this.db.run("CREATE TABLE IF NOT EXISTS counter (guildId TEXT, counter INTEGER)");
+        this.db.run("CREATE TABLE IF NOT EXISTS hours (guildId TEXT, userId TEXT, time INTEGER)");
         // this.db.run("CREATE TABLE IF NOT EXISTS nicks (guildId TEXT, userId TEXT, nick TEXT)");
     }
 
@@ -104,6 +105,47 @@ class SQL {
             this.db.get(`SELECT * FROM counter WHERE guildId = ?`, [data.guildId], (err, row) => {
                 if (err) resolve(null);
                 resolve(row);
+            });
+        });
+    }
+
+    updateHours(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {STRING} data.userId
+         * @param {INTEGER} data.time
+         */
+        this.getHour({ guildId: data.guildId, userId: data.userId })
+            .then(row => {
+                if (row) {
+                    this.db.run(`UPDATE hours SET time = ? WHERE guildId = ? AND userId = ?`, [data.time, data.guildId, data.userId]);
+                } else {
+                    this.db.run(`INSERT INTO hours (guildId, userId, time) VALUES (?, ?, ?)`, [data.guildId, data.userId, data.time]);
+                }
+            });
+    }
+
+    getHours(data) {
+        /**
+         * @param {STRING} data.guildId
+         * @param {STRING} data.userId
+         */
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM hours WHERE guildId = ? AND userId = ?`, [data.guildId, data.userId], (err, row) => {
+                if (err) resolve(null);
+                resolve(row);
+            });
+        });
+    }
+
+    getAllHours(data) {
+        /**
+         * @param {STRING} data.guildId
+         */
+        return new Promise((resolve, reject) => {
+            this.db.all(`SELECT * FROM hours WHERE guildId = ?`, [data.guildId], (err, rows) => {
+                if (err) resolve(null);
+                resolve(rows);
             });
         });
     }
