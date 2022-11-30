@@ -135,7 +135,7 @@ class Listener {
     _onlineHoursCommand(message) {
         // get the number of hours the user has been online in a voice channel
         const hours = this.hoursCounter.getHours(message.author.id);
-        message.reply(`You have been online for **${hours}** hours.`);
+        message.reply(`You have been online for **${hours}**.`);
     }
 
     _helpCommand(message) {

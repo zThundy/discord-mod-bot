@@ -41,12 +41,13 @@ class HoursCounter {
     }
 
     getHours(userId) {
-        // return the number of hours formatted as hh:mm:ss
+        // return the number of hours formatted as "hh:mm:ss"
         // the array this.seconds has seconds as value
+        let days = Math.floor(this.seconds[userId] / 86400);
         let hours = Math.floor(this.seconds[userId] / 3600);
         let minutes = Math.floor((this.seconds[userId] - (hours * 3600)) / 60);
         let seconds = this.seconds[userId] - (hours * 3600) - (minutes * 60);
-        return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        return `${days.toString()} days - ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")} hours`;
     }
 }
 
