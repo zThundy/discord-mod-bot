@@ -5,7 +5,7 @@ class Listener {
         this.hoursCounter = client.modules.get("hourCounter");
     }
 
-    run(event, oldState, newState) {
+    run(event, client, oldState, newState) {
         if (event === "voiceStateUpdate") {
             this.hoursCounter.checkVoiceState(oldState, newState);
         }

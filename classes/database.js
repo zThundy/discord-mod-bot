@@ -115,7 +115,7 @@ class SQL {
          * @param {STRING} data.userId
          * @param {INTEGER} data.time
          */
-        this.getHour({ guildId: data.guildId, userId: data.userId })
+        this.getHours({ guildId: data.guildId, userId: data.userId })
             .then(row => {
                 if (row) {
                     this.db.run(`UPDATE hours SET time = ? WHERE guildId = ? AND userId = ?`, [data.time, data.guildId, data.userId]);
