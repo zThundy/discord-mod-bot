@@ -41,6 +41,7 @@ class HoursCounter {
     }
 
     getHours(userId) {
+        if (!this.seconds[userId]) this.seconds[userId] = 0;
         // return the number of hours formatted as "hh:mm:ss"
         // the array this.seconds has seconds as value
         let days = Math.floor(this.seconds[userId] / 86400);
