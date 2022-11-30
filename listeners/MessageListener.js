@@ -7,6 +7,7 @@ class Listener {
         this.reactions = client.modules.get("userReactions");
         this.wordFilter = client.modules.get("wordFilter");
         this.counter = client.modules.get("counter");
+        this.hoursCounter = client.modules.get("hourCounter");
     }
 
     run(event, ...args) {
