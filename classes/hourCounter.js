@@ -46,7 +46,7 @@ class HoursCounter {
         let hours = Math.floor(this.seconds[userId] / 3600);
         let minutes = Math.floor((this.seconds[userId] - (hours * 3600)) / 60);
         let seconds = this.seconds[userId] - (hours * 3600) - (minutes * 60);
-        return `${hours}:${minutes}:${seconds}`;
+        return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     }
 }
 
