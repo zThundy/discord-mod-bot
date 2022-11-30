@@ -44,6 +44,8 @@ class Listener {
                 this._loggerCommand(message);
             } else if (message.content.includes("online")) {
                 this._onlineHoursCommand(message);
+            } else if (message.content.includes("help")) {
+                this._helpCommand(message);
             }
         }
     }
@@ -132,6 +134,32 @@ class Listener {
         // get the number of hours the user has been online in a voice channel
         const hours = this.hoursCounter.getHours(message.author.id);
         message.reply(`You have been online for **${hours}** hours.`);
+    }
+
+    _helpCommand(message) {
+        const embed = {
+            title: "List of commands",
+            description: "This is a list of all the commands that the bot has.",
+            fields: [
+                {
+                    name: "Reaction",
+                    value: "This command is used to add or remove reactions from a message. To use this command you need to reply to a message that you want to add reactions to. You can add multiple reactions by separating them with a comma. To remove reactions you need to reply to the message that you want to remove the reactions from."
+                },
+                {
+                    name: "Logger",
+                    value: "This command is used to set the channel where the bot will log messages that are deleted. To use this command you need to be in the channel that you want to set as the logger channel. To set the logger channel you need to type `logger set`."
+                },
+                {
+                    name: "Online",
+                    value: "This command is used to check how many hours you have been online in a voice channel."
+                }
+            ],
+            color: 0x00ff00,
+            footer: {
+                text: "Made with ❤️ by zThundy"
+            }
+        };
+        message.reply({ embeds: [embed] });
     }
 }
 
