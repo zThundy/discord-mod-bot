@@ -34,13 +34,15 @@ class Listener {
 
         // check if the message is beeing sent from a bot
         if (message.author.bot) return;
-        // check if the message is sent from someone that is not an admin
-        if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
 
         if (message.mentions.users.has(client.user.id)) {
             if (message.content.includes("reaction")) {
+                // check if the message is sent from someone that is not an admin
+                if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
                 this._reactionsCommand(message);
             } else if (message.content.includes("logger")) {
+                // check if the message is sent from someone that is not an admin
+                if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
                 this._loggerCommand(message);
             } else if (message.content.includes("online")) {
                 this._onlineHoursCommand(message);
