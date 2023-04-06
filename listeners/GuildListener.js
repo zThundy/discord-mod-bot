@@ -7,9 +7,9 @@ class Listener {
     run(event, client, guild) {
         switch(event) {
             case "guildCreate":
-                if (guild.id !== this.config.guildId) {
-                    guild.leave();
-                }
+                // if (guild.id !== this.config.guildId) {
+                //     guild.leave();
+                // }
                 break;
         }
     }

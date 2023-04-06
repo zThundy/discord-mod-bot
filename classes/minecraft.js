@@ -3,6 +3,7 @@ const { RconConnection } = require("@scriptserver/core");
 class MinecraftHandler {
     constructor(config, client) {
         this.config = config;
+        if (!this.config.minecraft.enabled) return;
         this.db = client.db;
         this.connection = new RconConnection({
             rconConnection: {
